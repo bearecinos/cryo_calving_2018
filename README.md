@@ -25,7 +25,8 @@ correcting the depth width of the terminus
 * To run the scripts you **must follow the order of the files.** 
 * All scripts require a modify version of **RGI v.6.0**, where four 
 *Marine-terminating glaciers* have been merged with their respective branches 
-* RGI id's of the glacier merged:
+* RGI id's of the glacier merged:    
+
 RGI60-01.21008 with RGI60-01.26732    
 RGI60-01.10689 with RGI60-01.23635    
 RGI60-01.26736 with RGI60-01.14443
