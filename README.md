@@ -60,7 +60,7 @@ in cryo_cluster_scripts and copied to your PC home directory the output_data fol
 
 #### Please read the top of the scripts to know more about the ouput of each run.
 
-### External libraries:    
+### External libraries that are not in OGGM env:    
 
 The cryo_plots scripts requiere additional libraries outside OGGM libraries such as:    
 `collections` , `cartopy`, `cartopy.mpl.gridliner` , `cartopy.feature`, `cartopy.io.shapereader` and `cartopy.crs`   
