@@ -60,9 +60,12 @@ in cryo_cluster_scripts and copied to your PC home directory the output_data fol
 
 #### Please read the top of the scripts to know more about the ouput of each run.
 
-### External libraries:
+### External libraries:    
 
-Also make sure to install the uncertainties python library from  
+The cryo_plots scripts requiere additional libraries outside OGGM libraries such as:    
+`collections` , `cartopy`, `cartopy.mpl.gridliner` , `cartopy.feature`, `cartopy.io.shapereader` and `cartopy.crs`   
+
+Also make sure to install the `uncertainties` python library from:   
    
 https://pythonhosted.org/uncertainties/  
 
@@ -70,7 +73,8 @@ Or via
 `conda install -c conda-forge uncertainties`
 
 This library is use only in the `k_factors_plot.py` to find *k* values that 
-intercept the frontal ablation observations.
+intercept the frontal ablation observations.    
+ 
  
 
 
