@@ -27,10 +27,10 @@ correcting the depth width of the terminus
 *Marine-terminating glaciers* have been merged with their respective branches 
 * RGI id's of the glacier merged:    
 
-RGI60-01.21008 with RGI60-01.26732    
-RGI60-01.10689 with RGI60-01.23635    
-RGI60-01.26736 with RGI60-01.14443
-RGI60-01.03890 with RGI60-01.23664
+RGI60-01.21008 with RGI60-01.26732         
+RGI60-01.10689 with RGI60-01.23635         
+RGI60-01.26736 with RGI60-01.14443    
+RGI60-01.03890 with RGI60-01.23664     
 
 * The merge was necessary in order to use McNabb *et al.* 2012 data base.
 
