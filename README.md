@@ -23,9 +23,9 @@ different model configurations.
 correcting the depth width of the terminus 
 
 * **IMPORTANT:**
-* To run the scripts make sure you have this folder on your home directory.
-* To run the scripts you **must follow the order of the files.** 
-* All scripts require a modify version of **RGI v.6.0**, where four 
+* To run the scripts make sure you have this repository on your home directory.
+* To run the scripts you **must follow the order of the folders.** 
+* All scripts require a modified version of **RGI v.6.0**, where four 
 *Marine-terminating glaciers* have been merged with their respective branches. 
 **This file is already located in the input_data folder of the repository.**  
 
@@ -66,7 +66,7 @@ in cryo_cluster_scripts and copied to your PC home directory the output_data fol
 
 ### External libraries that are not in OGGM env:    
 
-The cryo_plots scripts requiere additional libraries outside OGGM libraries such as:    
+Some of the cryo_plots scripts requiere additional libraries outside OGGM libraries such as:    
 `collections` , `cartopy`, `cartopy.mpl.gridliner` , `cartopy.feature`, `cartopy.io.shapereader` and `cartopy.crs`   
 
 Also make sure to install the `uncertainties` python library from:   
