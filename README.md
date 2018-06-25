@@ -20,7 +20,7 @@ The content of the repository is the following:
 different model configurations.
 
 5. Appendix run: Marine-terminating glaciers calving fluxes calculated 
-correcting the depth width of the terminus 
+by correcting the depth and width of the terminus 
 
 * **IMPORTANT:**
 * To run the scripts make sure you have this repository on your home directory.
