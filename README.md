@@ -54,19 +54,19 @@ in cryo_cluster_scripts and copied to your PC home directory the output_data fol
 * Contains all data necessary for the cluster running and plotting scripts.
 
 **IV. Output data**
-* Thi folder will be generated once you have ran the cryo_cluster_scripts.
+* This folder will be generated once you have ran the cryo_cluster_scripts.
 * Contains the output files for each folder in cryo_cluster_scripts.
 
 **V. plots** 
 
-* Where all the plots get save
+* Where all the plots get saved
 
 
 #### Please read the top of the scripts to know more about the ouput of each run.
 
-### External libraries that are not in OGGM env:    
+### External libraries that are not in the OGGM env:    
 
-Some of the cryo_plots scripts requiere additional libraries outside OGGM libraries such as:    
+The `rgi_overview.py` requiere additional libraries outside OGGM libraries such as:    
 `collections` , `cartopy`, `cartopy.mpl.gridliner` , `cartopy.feature`, `cartopy.io.shapereader` and `cartopy.crs`   
 
 Also make sure to install the `uncertainties` python library from:   
