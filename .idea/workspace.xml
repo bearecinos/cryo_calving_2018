@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="10f559ab-392c-413d-9811-5bde56793f99" name="Default" comment="" />
+    <list default="true" id="10f559ab-392c-413d-9811-5bde56793f99" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cryo_cluster_scripts/4_Runs_different_configurations/README.md" afterPath="$PROJECT_DIR$/cryo_cluster_scripts/4_Runs_different_configurations/README.md" />
+    </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -10,30 +13,7 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="FileEditorManager">
-    <leaf>
-      <file leaf-file-name="rgi_overview.py" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/cryo_plots/rgi_overview.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="135">
-              <caret line="9" column="20" lean-forward="true" selection-start-line="7" selection-start-column="0" selection-end-line="9" selection-end-column="26" />
-              <folding>
-                <element signature="e#0#9#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="calving_vs_volume_plot.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/cryo_plots/calving_vs_volume_plot.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="135">
-              <caret line="9" column="28" lean-forward="false" selection-start-line="9" selection-start-column="28" selection-end-line="9" selection-end-column="28" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-    </leaf>
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300" />
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -70,8 +50,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/cryo_plots/glena_plot.py" />
-        <option value="$PROJECT_DIR$/cryo_cluster_scripts/3_Sensitivity_studies_k_A_fs/run_fs_experiments.sh" />
         <option value="$PROJECT_DIR$/cryo_cluster_scripts/3_Sensitivity_studies_k_A_fs/3_3_fs_exp/glena_exp1.py" />
         <option value="$PROJECT_DIR$/cryo_cluster_scripts/4_Runs_different_configurations/4_1_No_calving_exp/prepro_rgi6_reg_01.py" />
         <option value="$PROJECT_DIR$/cryo_cluster_scripts/4_Runs_different_configurations/4_1_No_calving_exp/config_1.py" />
@@ -120,7 +98,9 @@
         <option value="$PROJECT_DIR$/README.md" />
         <option value="$PROJECT_DIR$/cryo_cluster_scripts/3_Sensitivity_studies_k_A_fs/README.md" />
         <option value="$PROJECT_DIR$/cryo_plots/alaska_volume.py" />
+        <option value="$PROJECT_DIR$/cryo_plots/velocities.py" />
         <option value="$PROJECT_DIR$/cryo_cluster_scripts/4_Runs_different_configurations/README.md" />
+        <option value="$PROJECT_DIR$/cryo_cluster_scripts/4_Runs_different_configurations/4_5_Velocities/no_calving.py" />
       </list>
     </option>
   </component>
@@ -145,8 +125,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
-      <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -157,12 +135,38 @@
             <path>
               <item name="cryo_calving_2018" type="b2602c69:ProjectViewProjectNode" />
               <item name="cryo_calving_2018" type="462c0819:PsiDirectoryNode" />
+              <item name="cryo_cluster_scripts" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="cryo_calving_2018" type="b2602c69:ProjectViewProjectNode" />
+              <item name="cryo_calving_2018" type="462c0819:PsiDirectoryNode" />
+              <item name="cryo_cluster_scripts" type="462c0819:PsiDirectoryNode" />
+              <item name="1_Columbia_Glacier_runs" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="cryo_calving_2018" type="b2602c69:ProjectViewProjectNode" />
+              <item name="cryo_calving_2018" type="462c0819:PsiDirectoryNode" />
+              <item name="cryo_cluster_scripts" type="462c0819:PsiDirectoryNode" />
+              <item name="4_Runs_different_configurations" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="cryo_calving_2018" type="b2602c69:ProjectViewProjectNode" />
+              <item name="cryo_calving_2018" type="462c0819:PsiDirectoryNode" />
+              <item name="cryo_cluster_scripts" type="462c0819:PsiDirectoryNode" />
+              <item name="4_Runs_different_configurations" type="462c0819:PsiDirectoryNode" />
+              <item name="4_5_Velocities" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="cryo_calving_2018" type="b2602c69:ProjectViewProjectNode" />
+              <item name="cryo_calving_2018" type="462c0819:PsiDirectoryNode" />
               <item name="cryo_plots" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
+      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -335,18 +339,17 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-1" y="0" width="1922" height="1056" extended-state="6" />
-    <editor active="true" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.34471717" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3569904" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.42719486" sideWeight="0.5149413" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32976446" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.14834578" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="true" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.42719486" sideWeight="0.4850587" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="true" content_ui="tabs" />
       <window_info id="Data View" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.29028815" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -397,28 +400,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/cryo_plots/columbia_plots/alaska_volume.py" />
-    <entry file="file://$APPLICATION_HOME_DIR$/helpers/pydev/_pydev_imps/_pydev_execfile.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="17" column="0" lean-forward="false" selection-start-line="17" selection-start-column="0" selection-end-line="17" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/miniconda3/envs/oggm_env/lib/python3.6/site-packages/oggm/core/centerlines.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="141">
-          <caret line="769" column="4" lean-forward="false" selection-start-line="769" selection-start-column="4" selection-end-line="769" selection-end-column="4" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/miniconda3/envs/oggm_env/lib/python3.6/site-packages/oggm/core/gis.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="126">
-          <caret line="408" column="56" lean-forward="true" selection-start-line="408" selection-start-column="56" selection-end-line="408" selection-end-column="56" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$USER_HOME$/miniconda3/envs/oggm_env/lib/python3.6/site-packages/oggm/utils.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="826">
@@ -588,6 +569,11 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/README.md">
+      <provider editor-type-id="text-editor">
+        <state relative-caret-position="375">
+          <caret line="25" column="64" lean-forward="false" selection-start-line="25" selection-start-column="64" selection-end-line="25" selection-end-column="64" />
+        </state>
+      </provider>
       <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
         <state split_layout="FIRST">
           <first_editor relative-caret-position="-90">
@@ -596,23 +582,11 @@
           <second_editor />
         </state>
       </provider>
-      <provider editor-type-id="text-editor">
-        <state relative-caret-position="375">
-          <caret line="25" column="64" lean-forward="false" selection-start-line="25" selection-start-column="64" selection-end-line="25" selection-end-column="64" />
-        </state>
-      </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/cryo_cluster_scripts/1_Columbia_Glacier_runs/prepro_columbia.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-928">
           <caret line="42" column="0" lean-forward="false" selection-start-line="42" selection-start-column="0" selection-end-line="42" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/cryo_cluster_scripts/1_Columbia_Glacier_runs/run_calving_columbia.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-3778">
-          <caret line="44" column="0" lean-forward="false" selection-start-line="44" selection-start-column="0" selection-end-line="44" selection-end-column="0" />
         </state>
       </provider>
     </entry>
@@ -724,16 +698,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/cryo_cluster_scripts/4_Runs_different_configurations/README.md">
-      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-        <state split_layout="FIRST">
-          <first_editor relative-caret-position="450">
-            <caret line="66" column="1" lean-forward="true" selection-start-line="66" selection-start-column="1" selection-end-line="66" selection-end-column="1" />
-          </first_editor>
-          <second_editor />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/cryo_plots/alaska_volume.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="176">
@@ -748,21 +712,69 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/cryo_plots/rgi_overview.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="135">
+          <caret line="9" column="20" lean-forward="false" selection-start-line="7" selection-start-column="0" selection-end-line="9" selection-end-column="26" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/cryo_plots/calving_vs_volume_plot.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="135">
           <caret line="9" column="28" lean-forward="false" selection-start-line="9" selection-start-column="28" selection-end-line="9" selection-end-column="28" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/miniconda3/envs/oggm_env/lib/python3.6/site-packages/oggm/core/inversion.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="293">
+          <caret line="229" column="17" lean-forward="false" selection-start-line="229" selection-start-column="17" selection-end-line="229" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cryo_cluster_scripts/1_Columbia_Glacier_runs/run_calving_columbia.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="15">
+          <caret line="155" column="37" lean-forward="false" selection-start-line="155" selection-start-column="37" selection-end-line="155" selection-end-column="37" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/cryo_plots/rgi_overview.py">
+    <entry file="file://$PROJECT_DIR$/cryo_plots/velocities.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="135">
-          <caret line="9" column="20" lean-forward="true" selection-start-line="7" selection-start-column="0" selection-end-line="9" selection-end-column="26" />
+        <state relative-caret-position="2156">
+          <caret line="154" column="31" lean-forward="false" selection-start-line="154" selection-start-column="31" selection-end-line="154" selection-end-column="31" />
           <folding>
-            <element signature="e#0#9#0" expanded="true" />
+            <element signature="e#0#19#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cryo_cluster_scripts/4_Runs_different_configurations/4_5_Velocities/no_calving.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="57" lean-forward="false" selection-start-line="0" selection-start-column="57" selection-end-line="0" selection-end-column="57" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cryo_cluster_scripts/4_Runs_different_configurations/4_5_Velocities/calving.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cryo_cluster_scripts/4_Runs_different_configurations/README.md">
+      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+        <state split_layout="FIRST">
+          <first_editor relative-caret-position="1350">
+            <caret line="90" column="0" lean-forward="true" selection-start-line="90" selection-start-column="0" selection-end-line="90" selection-end-column="0" />
+            <folding />
+          </first_editor>
+          <second_editor />
         </state>
       </provider>
     </entry>

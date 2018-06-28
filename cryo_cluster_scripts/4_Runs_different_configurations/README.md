@@ -71,3 +71,20 @@ run this from the cluster you will have to make a new .slurm script.** The run
 takes a few seconds so it can be done in the PC after copying the output_data folder
 to your `~/cryo_calving_2018/output_data` folder.  
  
+4.5 Velocities run:    
+
+* This script has the same configuration as the `run_calving_columbia.py` script. 
+In this routine we calculate the calving flux for marine-terminating glaciers, keeping
+OGGM's default parameters **(k, Glen A and fs = Default)**, there is **also no correction
+to the terminus width and depth**.       
+
+* In here we save the /per_glacier output of both experiments: 
+No calving and after calving.     
+
+* To run this script make sure this file is excetuable.     
+
+* To execute the run in the cluster type the commands below in experiment root 
+folder: *cryo_cluster_scritps/4_Runs_different_configurations*:       
+`./run_velocities.sh`
+  
+
