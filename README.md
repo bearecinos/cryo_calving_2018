@@ -20,12 +20,12 @@ The content of the repository is the following:
 different model configurations.
 
 5. Appendix run: Marine-terminating glaciers calving fluxes calculated 
-correcting the depth width of the terminus 
+by correcting the depth and width of the terminus 
 
 * **IMPORTANT:**
-* To run the scripts make sure you have this folder on your home directory.
-* To run the scripts you **must follow the order of the files.** 
-* All scripts require a modify version of **RGI v.6.0**, where four 
+* To run the scripts make sure you have this repository on your home directory.
+* To run the scripts you **must follow the order of the folders.** 
+* All scripts require a modified version of **RGI v.6.0**, where four 
 *Marine-terminating glaciers* have been merged with their respective branches. 
 **This file is already located in the input_data folder of the repository.**  
 
@@ -54,19 +54,19 @@ in cryo_cluster_scripts and copied to your PC home directory the output_data fol
 * Contains all data necessary for the cluster running and plotting scripts.
 
 **IV. Output data**
-* Thi folder will be generated once you have ran the cryo_cluster_scripts.
+* This folder will be generated once you have ran the cryo_cluster_scripts.
 * Contains the output files for each folder in cryo_cluster_scripts.
 
 **V. plots** 
 
-* Where all the plots get save
+* Where all the plots get saved
 
 
 #### Please read the top of the scripts to know more about the ouput of each run.
 
-### External libraries that are not in OGGM env:    
+### External libraries that are not in the OGGM env:    
 
-The cryo_plots scripts requiere additional libraries outside OGGM libraries such as:    
+The `rgi_overview.py` requiere additional libraries outside OGGM libraries such as:    
 `collections` , `cartopy`, `cartopy.mpl.gridliner` , `cartopy.feature`, `cartopy.io.shapereader` and `cartopy.crs`   
 
 Also make sure to install the `uncertainties` python library from:   
