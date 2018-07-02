@@ -4,7 +4,9 @@ This repository **cryo_calving_2018** contains the scripts used to implement a
 calving parameterisation into [OGGM](www.oggm.org) and produce the results of
 the paper that will be submitted to: https://www.the-cryosphere.net/ or other journal that the co-authors suggest.    
 
-This repository uses a OGGM version V1.0.1 pinned here: https://github.com/OGGM/oggm/releases/tag/v1.0.1    
+This repository uses a OGGM version V1.0.1 pinned here: https://github.com/OGGM/oggm/releases/tag/v1.0.1
+
+With a the virtual environment defined in the file: **[manual_virual_env.txt]()**     
 
 The content of the repository is the following: 
 
