@@ -6,7 +6,8 @@ the paper that will be submitted to: https://www.the-cryosphere.net/ or other jo
 
 This repository uses a OGGM version V1.0.1 pinned here: https://github.com/OGGM/oggm/releases/tag/v1.0.1
 
-With a the virtual environment defined in the file: **[manual_virual_env.txt]()**     
+With a virtual environment defined in this file:
+**[manual_virual_env.txt](https://github.com/bearecinos/cryo_calving_2018/blob/master/manual_virual_env.txt)**     
 
 The content of the repository is the following: 
 
