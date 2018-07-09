@@ -1,6 +1,5 @@
 # This script will plot the results of kxfactors experiment
 
-
 import numpy as np
 import uncertainties as unc
 from scipy import stats
@@ -14,9 +13,9 @@ from matplotlib import rcParams
 
 # Plot settings
 rcParams['axes.labelsize'] = 15
-rcParams['xtick.labelsize'] = 15
-rcParams['ytick.labelsize'] = 15
-rcParams['legend.fontsize'] = 15
+rcParams['xtick.labelsize'] = 12
+rcParams['ytick.labelsize'] = 12
+rcParams['legend.fontsize'] = 12
 # Set figure width and height in cm
 width_cm = 14
 height_cm = 8
@@ -40,13 +39,18 @@ filenames = []
 filenames.append(sorted(glob.glob(WORKING_DIR_one)))
 filenames.append(sorted(glob.glob(WORKING_DIR_two)))
 
-kfactors = [0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1, 1.1, 1.2]
+kfactors = [0.1, 0.15, 0.2, 0.25, 0.3, 0.35,
+           0.4, 0.45, 0.5, 0.55, 0.6, 0.65,
+           0.7, 0.75, 0.8, 0.85, 0.9, 0.95,
+           1.0, 1.05]
+
 k = np.asarray(kfactors)*2.4
+print(k)
 
 def read_experiment_file(filename):
     glacier = pd.read_csv(filename)
-    glacier = glacier[['rgi_id','terminus_type', 'calving_flux']]
-    calving = glacier['calving_flux'][1:-1]
+    glacier = glacier[['rgi_id','terminus_type', 'calving_flux', 'mu_star']]
+    calving = glacier['calving_flux']
     return calving
 
 calvings = []
@@ -148,18 +152,18 @@ plt.plot(k, intercept3 + slope3 * k, '--', color='black', linewidth=3.0,
              label='Regional calving flux. (McNabb et al., 2015)')
 
 plt.xticks(k)
-plt.yticks(np.arange(0, 60, 5.0))
+plt.yticks(np.arange(0, 90, 5.0))
 plt.ylabel('Alaska calving flux $km³.yr^{-1}$')
 plt.xlabel('Calving constant k ($\mathregular{yr^{-1}}$) ')
-plt.legend(loc='lower right')
-plt.text(0.2, 35.5, 'Intercepts to observations', fontsize=15)
-plt.text(0.2,32,'$k_{1}$ = 0.962 +/- 0.004', fontsize=15)
-plt.text(0.2, 30, '$k_{2}$ = 1.236 +/- 0.008', fontsize=15)
+plt.legend(bbox_to_anchor=(0.4, 1))
+plt.text(0.2, 60.5, 'Intercepts to observations', fontsize=12)
+plt.text(0.2,57,'$k_{1}$ = 0.6124 +/- 0.0023', fontsize=12)
+plt.text(0.2, 53, '$k_{2}$ = 0.707 +/- 0.004', fontsize=12)
 letkm = dict(color='black', ha='left', va='top', fontsize=20,
                  bbox=dict(facecolor='white', edgecolor='white'))
 
-plt.text(-0.1, 60, 'a', **letkm)
+plt.text(-0.1, 90, 'a', **letkm)
 plt.margins(0.05)
 #plt.show()
 plt.savefig(os.path.join(plot_path, 'k_factors.png'), dpi=150,
-                  bbox_inches='tight')
+                   bbox_inches='tight')

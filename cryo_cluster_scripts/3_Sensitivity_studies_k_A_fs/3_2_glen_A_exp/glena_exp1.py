@@ -96,7 +96,7 @@ log.info('Number of glaciers: {}'.format(len(rgidf)))
 gdirs = workflow.init_glacier_regions(rgidf)
 
 factors = [0.6, 0.7, 0.8, 0.9, 1, 1.1, 1.2, 1.3, 1.4, 1.5, 1.6, 1.7]
-k = 0.962
+k = 0.6124
 
 # Defining a calving function
 def calving_from_depth(gdir, k):

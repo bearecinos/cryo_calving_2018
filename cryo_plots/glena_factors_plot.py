@@ -1,6 +1,5 @@
 # This script will plot the results of glenaxfactors experiment
 
-
 import numpy as np
 import pandas as pd
 import os
@@ -51,7 +50,7 @@ glen_a = np.asarray(factors)*2.4e-24
 def read_experiment_file(filename):
     glacier = pd.read_csv(filename)
     glacier = glacier[['rgi_id','terminus_type', 'calving_flux']]
-    calving = glacier['calving_flux'][1:-1]
+    calving = glacier['calving_flux']
     return calving
 
 calvings = []
@@ -88,10 +87,10 @@ data_frame1 = cf1.T
 data_frame2 = cf2.T
 data_frame3 = cf3.T
 
-my_labels_glena = {"x0": "fs = 0.0, $k_{1}$ = 0.962 +/- 0.004",
-                   "x1": "fs = 0.0, $k_{2}$ = 1.236 +/- 0.008",
-                   "x2": "fs = OGGM default, $k_{1}$ = 0.962 +/- 0.004",
-                   "x3": "fs = OGGM default, $k_{2}$ = 1.236 +/- 0.008"}
+my_labels_glena = {"x0": "fs = 0.0, $k_{1}$ = 0.6124 +/- 0.0023",
+                   "x1": "fs = 0.0, $k_{2}$ = 0.707 +/- 0.004",
+                   "x2": "fs = OGGM default, $k_{1}$ = 0.6124 +/- 0.0023",
+                   "x3": "fs = OGGM default, $k_{2}$ = 0.707 +/- 0.004"}
 #Create figure and axes instances
 
 fig1 = plt.figure(1, figsize=(width_cm, height_cm))
@@ -120,7 +119,7 @@ plt.xlabel('Glen A ($\mathregular{s^{−1}} \mathregular{Pa^{−3}}$)')
 plt.legend()
 letkm = dict(color='black', ha='left', va='top', fontsize=20,
                  bbox=dict(facecolor='white', edgecolor='white'))
-plt.text(glen_a[0]-(glen_a[1]/5), 31, 'b', **letkm)
+plt.text(glen_a[0]-(glen_a[1]/5), 25, 'b', **letkm)
 plt.margins(0.05)
 
 #plt.show()

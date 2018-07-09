@@ -94,7 +94,10 @@ log.info('Number of glaciers: {}'.format(len(rgidf)))
 # -----------------------------------
 gdirs = workflow.init_glacier_regions(rgidf)
 
-factors = [0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1, 1.1, 1.2]
+factors = [0.1, 0.15, 0.2, 0.25, 0.3, 0.35,
+           0.4, 0.45, 0.5, 0.55, 0.6, 0.65,
+           0.7, 0.75, 0.8, 0.85, 0.9, 0.95,
+           1.0, 1.05]
 k = 2.4
 
 # Defining a calving function
@@ -160,7 +163,7 @@ if RUN_CLIMATE_PREPRO:
     execute_entity_task(tasks.apparent_mb, gdirs)
 
 for f in factors:
-    suf = '_{:03d}_kxfactors_cfgA_cfgFS'.format(int(f * 10))
+    suf = '_kxfactors_cfgA_fs_zero' + str(f)
 
     if RUN_INVERSION:
         # Inversion tasks
@@ -322,8 +325,7 @@ for f in factors:
                             glen_a=cfg.A, fs=cfg.FS)
 
         # Write out glacier statistics
-        utils.glacier_characteristics(gdirs, filesuffix='_with_calving_' + suf,
-                                      inversion_only=True)
+        utils.glacier_characteristics(gdirs, filesuffix='_with_calving_' + suf)
 
         m, s = divmod(time.time() - start, 60)
         h, m = divmod(m, 60)
