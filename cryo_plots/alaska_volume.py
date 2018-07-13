@@ -43,7 +43,7 @@ output_dir_path = os.path.join(MAIN_PATH,
 
 full_exp_name = []
 
-exclude = set(['4_3_With_calving_exp_onlyMT_vbsl'])
+exclude = set(['4_3_With_calving_exp_onlyMT_vbsl','4_5_Velocities'])
 
 for path, subdirs, files in os.walk(output_dir_path, topdown=True):
     subdirs[:] = [d for d in subdirs if d not in exclude]
