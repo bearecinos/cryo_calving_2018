@@ -15,9 +15,9 @@ The content of each experiment is the following:
 *  After finding the intersects between the results in 3.1 and the frontal 
 ablation observations, we pick the values of *k* to be (`k1 = 0.6124` and
  `k2 = 0.707`)   
+* The intercepts were found using the plotting script: `~/cryo_calving_2018/cryo_plots/k_factors.py`.   
 * We then take these values of *k* and vary the values of *Glen A* from a factor of 
-0.6 - 1.7 x `Glen A = OGGM defalut`. Alternating sliding and no 
-sliding for each *k* value. 
+0.6 - 1.7 x `Glen A = OGGM defalut`. Alternating sliding and no sliding for each *k* value. 
 
 | File           | Configuration                                          |
 | -------------: | :-----------------------------------------------------:|
@@ -27,7 +27,6 @@ sliding for each *k* value.
 | glena_exp4     | f<sub>s</sub> = OGGM default, k<sub>2</sub> = 0.707    |
 
 **3.3 fs experiment:**
-
 * We do the same analysis to the sliding parameter varying *fs* parameter
 in a factor range of 0.0 - 1.2 x `fs = OGGM default`. And alternating the different values of *k*.
 
@@ -36,14 +35,15 @@ in a factor range of 0.0 - 1.2 x `fs = OGGM default`. And alternating the differ
 | fs_exp1     | glen a = OGGM default, k<sub>1</sub> = 0.6124          |
 | fs_exp2     | glen a = OGGM default, k<sub>2</sub> = 0.707           |
 
-
-To execute the runs in the cluster type the commands below in experiment root 
-folder: *cryo_cluster_scritps/3_Sensitivity_studies_k_A_fs*:     
+To execute the runs in the cluster type the commands below in experiment root folder:    
+ *cryo_cluster_scritps/3_Sensitivity_studies_k_A_fs*:     
 
 **And make sure you make this files executables by doing:** *e.g.* `chmod +x run_k_experiments.sh`    
 
-`run_k_experiments.sh`   
-`run_glena_experiments.sh`   
-`run_fs_experiments.sh`   
+**Then run using:**     
+
+`./run_k_experiments.sh`   
+`./run_glena_experiments.sh`   
+`./run_fs_experiments.sh`   
  
  

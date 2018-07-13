@@ -13,8 +13,6 @@ The content of the repository is the following:
 
 **I. cryo_cluster_scripts** (the running scripts)
 
-* Contains the following sub-folders:
-
 1. Columbia Glacier scripts
 2. Calving vs Volume experiment
 3. Sensitivity experiments with OGGM default parameters:
@@ -25,8 +23,8 @@ different model configurations.
 5. Appendix run: Marine-terminating glaciers calving fluxes calculated 
 by correcting the depth and width of the terminus 
 
-* **IMPORTANT:**
-* To run the scripts make sure you have this repository on your home directory.
+* **IMPORTANT TO RUN THIS FOLDERS:**
+* To run the scripts make sure you have this repository on the home directory of your cluster environment.
 * To run the scripts you **must follow the order of the folders.** 
 * All scripts require a modified version of **RGI v.6.0**, where four 
 *Marine-terminating glaciers* have been merged with their respective branches. 
@@ -41,27 +39,25 @@ RGI60-01.03890 with RGI60-01.23664
 
 * The merge was necessary in order to use McNabb *et al.* 2012 data base.
 
-* Scripts in folders **2, 3 and 4** require the output of the Columbia Glacier
+* Scripts in folders **2, 3, 4 and 5** require the output of the Columbia Glacier
 pre-processing run. **You can't run these folders without having ran the scripts 
 in folder # 1.** 
-* All the data need it for the runs can be found in the input data file.   
-
+* All the data need it for the runs can be found in the input data file.
+* The output of every run will be save in your home `~/cryo_calving_2018/output_data/` folder.    
 
 **II. cryo_plots** (the plotting scripts)
-
 * You will be able to run the plotting scripts after you have completed the runs
-in cryo_cluster_scripts and copied to your PC home directory the output_data folder generated from the runs. The right place to copy this folder is in  `~/cryo_calving_2018/output_data/`
+in cryo_cluster_scripts and copied to your PC home directory the output_data folder generated from the runs. 
+The right place to copy this folder is in  `~/cryo_calving_2018/output_data/`
 
 **III. Input data** 
-
 * Contains all data necessary for the cluster running and plotting scripts.
 
 **IV. Output data**
-* This folder will be generated once you have ran the cryo_cluster_scripts.
+* This folder will be generated once you have ran the first scripts in cryo_cluster_scripts.
 * Contains the output files for each folder in cryo_cluster_scripts.
 
 **V. plots** 
-
 * Where all the plots get saved
 
 
