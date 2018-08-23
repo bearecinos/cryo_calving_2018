@@ -12,10 +12,10 @@ import matplotlib.pyplot as plt
 from matplotlib import rcParams
 
 # Plot settings
-rcParams['axes.labelsize'] = 15
-rcParams['xtick.labelsize'] = 12
-rcParams['ytick.labelsize'] = 12
-rcParams['legend.fontsize'] = 12
+rcParams['axes.labelsize'] = 20
+rcParams['xtick.labelsize'] = 20
+rcParams['ytick.labelsize'] = 20
+rcParams['legend.fontsize'] = 16
 # Set figure width and height in cm
 width_cm = 14
 height_cm = 8
@@ -151,18 +151,18 @@ plt.plot(k, intercept2 + slope2 * k, color=sns.xkcd_rgb["teal green"],
 plt.plot(k, intercept3 + slope3 * k, '--', color='black', linewidth=3.0,
              label='Regional calving flux. (McNabb et al., 2015)')
 
-plt.xticks(k)
-plt.yticks(np.arange(0, 90, 5.0))
+#plt.xticks(k)
+plt.yticks(np.arange(0, 90, 20.0))
 plt.ylabel('Alaska calving flux $km³.yr^{-1}$')
 plt.xlabel('Calving constant k ($\mathregular{yr^{-1}}$) ')
-plt.legend(bbox_to_anchor=(0.4, 1))
-plt.text(0.2, 60.5, 'Intercepts to observations', fontsize=12)
-plt.text(0.2,57,'$k_{1}$ = 0.6124 +/- 0.0023', fontsize=12)
-plt.text(0.2, 53, '$k_{2}$ = 0.707 +/- 0.004', fontsize=12)
+plt.legend(bbox_to_anchor=(0.6, 1))
+plt.text(0.4, 57.0, 'Intercepts to observations', fontsize=16)
+plt.text(0.4,52,'$k_{1}$ = 0.6124 +/- 0.0023', fontsize=16)
+plt.text(0.4, 47, '$k_{2}$ = 0.707 +/- 0.004', fontsize=16)
 letkm = dict(color='black', ha='left', va='top', fontsize=20,
                  bbox=dict(facecolor='white', edgecolor='white'))
 
-plt.text(-0.1, 90, 'a', **letkm)
+#plt.text(-0.1, 90, 'a', **letkm)
 plt.margins(0.05)
 #plt.show()
 plt.savefig(os.path.join(plot_path, 'k_factors.png'), dpi=150,

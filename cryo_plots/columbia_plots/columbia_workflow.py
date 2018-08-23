@@ -7,7 +7,7 @@ import netCDF4
 import pandas as pd
 import shapely.geometry as shpg
 from matplotlib import rcParams
-
+from scipy import stats
 import os
 import geopandas as gpd
 import numpy as np
@@ -99,8 +99,14 @@ def plot_inversion_with_calving(gdirs, ax=None, smap=None, linewidth=3,
                 cbar_primitive=dl,
                 title_comment=' ({:.2f} km3)'.format(np.nansum(vol) * 1e-9))
 
+def mean_d(data, ref):
+        "Mean difference between two arrays"
+        diff = data - ref
+        abs_diff = np.abs(diff)
+        return np.sum(abs_diff) / (data.size * ref.size)
+
 # figure 1  ---------------
-Plot_fig_1 = True
+Plot_fig_1 = False
 
 if Plot_fig_1:
 
@@ -139,7 +145,7 @@ if Plot_fig_1:
                              dpi=150, bbox_inches='tight')
 
 # figure 2  ---------------
-Plot_fig_2 = True
+Plot_fig_2 = False
 
 if Plot_fig_2:
 
@@ -174,9 +180,9 @@ if Plot_fig_2:
     axs[1].text(xt, yt, 'b', **letkm)
 
     plt.tight_layout()
-    #plt.show()
-    plt.savefig(os.path.join(plot_path, 'inversion_columbia.png'),
-                             dpi=150, bbox_inches='tight')
+    plt.show()
+    #plt.savefig(os.path.join(plot_path, 'inversion_columbia.png'),
+    #                         dpi=150, bbox_inches='tight')
 
 # figure 3 -------------
 Plot_fig_3 = True
@@ -233,6 +239,94 @@ if Plot_fig_3:
                   bbox=dict(facecolor='white', edgecolor='black'))
     #ax.text(-10, 3500, 'c', **letkm)
     plt.tight_layout()
-    #plt.show()
-    plt.savefig(os.path.join(plot_path, 'columbia_profile.png'),
+    plt.show()
+    #plt.savefig(os.path.join(plot_path, 'columbia_profile.png'),
+    #                         dpi=150, bbox_inches='tight')
+
+    # calculating RMSD for oggm profiles and observations
+
+    RMSD = oggm.utils.rmsd(thick07_h, bed)
+    RMSD_c = oggm.utils.rmsd(thick07_h, bed_c)
+
+    print('RMSD between observations and oggm with no calving',RMSD)
+    print('RMSD between observations and oggm with calving', RMSD_c)
+
+    mean_dev = oggm.utils.md(thick07_h, bed)
+    mean_dev_c = oggm.utils.md(thick07_h, bed_c)
+    print('mean difference between observations and oggm with no calving',mean_dev)
+    print('mean difference between observations and oggm with calving', mean_dev_c)
+
+    # Calculating the surface gradients
+    slope, intercept, r_value, p_value, std_err = stats.linregress(x, surface)
+
+    print(slope, intercept)
+
+    # Create a list of values in the best fit line
+    abline_values = [slope * i + intercept for i in x]
+
+
+    # calculate surface gradient ... surface is in m and space is now in m too
+    obs = thick07_h - abline_values
+    no_calving = bed - abline_values
+    with_calving = bed_c - abline_values
+
+    # Test for normality m
+    k1, p1 = stats.normaltest(obs)
+    k2, p2 = stats.normaltest(no_calving)
+    k3, p3 = stats.normaltest(with_calving)
+
+    alpha = 1e-3
+
+    if p1 < alpha:
+        print('sample is not normally distributed')
+    else:
+        print('sample is normally distributed')
+    if p2 < alpha:
+        print('sample is not normally distributed')
+    else:
+        print('sample is normally distributed')
+    if p3 < alpha:
+        print('sample is not normally distributed')
+    else:
+        print('sample is normally distributed')
+
+
+    # Computing a spearman correlation test because not all the data is normally distributed
+    rho, p = stats.pearsonr(obs, no_calving)
+    rho_c, p_c = stats.pearsonr(obs, with_calving)
+
+    print('No calving and observations', rho, p)
+    print('With calving and observations', rho_c, p_c)
+
+    alphacor = 0.05
+
+    if p > alphacor:
+        print('Samples are uncorrelated (fail to reject H0) p=%.5f', p)
+    else:
+        print('Samples are correlated (reject H0) p=%.5f', p)
+
+    if p_c > alphacor:
+        print('Samples are uncorrelated (fail to reject H0) p=%.5f', p_c)
+    else:
+        print('Samples are correlated (reject H0) p=%.5f', p_c)
+
+
+    fig = plt.figure(figsize=(12,6))
+
+    ax = fig.add_axes([0.07, 0.08, 0.7, 0.8])
+    ax.plot(x, bed, color='grey', linewidth=2.5, label='Bed no calving')
+    ax.plot(x, bed_c, color='k', linewidth=2.5, label = 'Bed with calving')
+    ax.plot(x, surface, color='r', linewidth=2.5, label = 'Glacier surface')
+    ax.plot(x, thick07_h, color='green', linestyle=':', linewidth=2.5,
+            label='Observed bed 2007, (McNabb et al, 2012)')
+    ax.plot(x, abline_values, color='r', linewidth=2.5, linestyle=':', label = 'Mean surface gradient')
+    ax.axhline(y=0, color='navy', linewidth=2.5, label= 'Sea level')
+    ax.legend(loc='upper right')
+    ax.set_xlabel('Distance along flowline (Km)')
+    ax.set_ylabel('Altitude (m)')
+    letkm = dict(color='black', ha='left', va='top', fontsize=20,
+                  bbox=dict(facecolor='white', edgecolor='black'))
+    #ax.text(-10, 3500, 'c', **letkm)
+    plt.tight_layout()
+    plt.savefig(os.path.join(plot_path, 'columbia_profileplusgradient.png'),
                              dpi=150, bbox_inches='tight')

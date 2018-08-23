@@ -9,10 +9,10 @@ import matplotlib.pyplot as plt
 from matplotlib import rcParams
 
 # Plot settings
-rcParams['axes.labelsize'] = 10
-rcParams['xtick.labelsize'] = 10
-rcParams['ytick.labelsize'] = 10
-rcParams['legend.fontsize'] = 10
+rcParams['axes.labelsize'] = 16
+rcParams['xtick.labelsize'] = 16
+rcParams['ytick.labelsize'] = 16
+rcParams['legend.fontsize'] = 14
 # Set figure width and height in cm
 width_cm = 14
 height_cm = 8
@@ -70,25 +70,39 @@ def calculate_velocity(gdir):
     # this flux is in km3
     flux = cl['flux_a0']
 
+    angle = cl['slope_angle']
+
     velocity = flux / section
 
-    return velocity, normalize(x)
+    return velocity, normalize(x), angle
 
 gdirs_one = init_velocity(no_calving)
 
 gdirs_two = init_velocity(with_calving)
 
 for gdir, gdir_c in zip(gdirs_one,gdirs_two):
-    vel, x = calculate_velocity(gdir)
-    vel_c, x_c = calculate_velocity(gdir_c)
+    vel, x, angle = calculate_velocity(gdir)
+    vel_c, x_c, angle_c= calculate_velocity(gdir_c)
+    diff_angle_c = np.diff(np.arctan(angle_c))
+    diff_angle = np.diff(np.arctan(angle))
 
     plt.figure(1)
     if vel_c[-1] > 0.0:
         plt.plot(x_c, vel_c-vel, '-', label=gdir.rgi_id)
         plt.legend(loc='center left', bbox_to_anchor=(1.0, 0.5))
-        plt.xlabel('Normalised distance along the main flowline', size=14)
-        plt.ylabel('Velocity $km.yr^{-1}$', size=14)
+        plt.xlabel('Normalised distance along the main flowline', size=16)
+        plt.ylabel('Velocity $km.yr^{-1}$', size=16)
+
+    # plt.figure(2)
+    # if np.abs(diff_angle[-1]) < 0.025:
+    #     plt.plot(x_c[-11:len(angle_c)-1],diff_angle_c[-10:], '-o')
+    #     plt.xlabel('Normalised distance along the main flowline', size=14)
+    #     plt.ylabel('Slope angle differences', size=14)
+
 
 plt.margins(0.05)
+#plt.show()
+
+
 plt.savefig(os.path.join(plot_path,'velocity_differences.png'),
-                             dpi=150, bbox_inches='tight')
+                              dpi=150, bbox_inches='tight')

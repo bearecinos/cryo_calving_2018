@@ -10,10 +10,10 @@ import matplotlib.pyplot as plt
 from matplotlib import rcParams
 
 # Plot settings
-rcParams['axes.labelsize'] = 15
-rcParams['xtick.labelsize'] = 15
-rcParams['ytick.labelsize'] = 15
-rcParams['legend.fontsize'] = 15
+rcParams['axes.labelsize'] = 20
+rcParams['xtick.labelsize'] = 20
+rcParams['ytick.labelsize'] = 20
+rcParams['legend.fontsize'] = 16
 # Set figure width and height in cm
 width_cm = 14
 height_cm = 8
@@ -119,7 +119,7 @@ plt.xlabel('Glen A ($\mathregular{s^{−1}} \mathregular{Pa^{−3}}$)')
 plt.legend()
 letkm = dict(color='black', ha='left', va='top', fontsize=20,
                  bbox=dict(facecolor='white', edgecolor='white'))
-plt.text(glen_a[0]-(glen_a[1]/5), 25, 'b', **letkm)
+#plt.text(glen_a[0]-(glen_a[1]/5), 25, 'b', **letkm)
 plt.margins(0.05)
 
 #plt.show()

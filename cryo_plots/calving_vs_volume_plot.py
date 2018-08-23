@@ -1,6 +1,4 @@
 # This script will plot the results of calving vs volume experiment
-
-
 import numpy as np
 import pandas as pd
 import os
@@ -11,10 +9,10 @@ from collections import OrderedDict
 import seaborn as sns
 
 # Plot settings
-rcParams['axes.labelsize'] = 15
-rcParams['xtick.labelsize'] = 15
-rcParams['ytick.labelsize'] = 15
-rcParams['legend.fontsize'] = 12
+rcParams['axes.labelsize'] = 20
+rcParams['xtick.labelsize'] = 20
+rcParams['ytick.labelsize'] = 20
+rcParams['legend.fontsize'] = 18
 # Set figure width and height in cm
 width_cm = 12
 height_cm = 6
@@ -79,7 +77,7 @@ for j, f in enumerate(filenames):
     plt.legend(by_label.values(), by_label.keys(), loc='upper right')
     letkm = dict(color='black', ha='left', va='top', fontsize=20,
                  bbox=dict(facecolor='white', edgecolor='white'))
-    plt.text(-0.7, 1.7, 'a', **letkm)
+    #plt.text(-0.7, 1.7, 'a', **letkm)
 #plt.show()
 plt.savefig(os.path.join(plot_path,'calving_volume.png'),
                               dpi=150, bbox_inches='tight')
@@ -116,7 +114,7 @@ for j, f in enumerate(filenames):
     plt.legend(by_label.values(), by_label.keys(), loc='upper right')
     letkm = dict(color='black', ha='left', va='top', fontsize=20,
                  bbox=dict(facecolor='white', edgecolor='white'))
-    plt.text(-0.7, 150, 'b', **letkm)
+    #plt.text(-0.7, 150, 'b', **letkm)
 #plt.show()
 plt.savefig(os.path.join(plot_path,'calving_mu_star.png'),
                              dpi=150, bbox_inches='tight')

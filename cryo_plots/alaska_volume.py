@@ -1,6 +1,6 @@
 # This script will calculate the total alaska volume per experiment
-
-
+# TODO MAKE THIS SCRIPT BETTER IS THE WORSE OF THE WORSE!
+import oggm.cfg as cfg
 import numpy as np
 import pandas as pd
 import os
@@ -19,6 +19,15 @@ rcParams['legend.fontsize'] = 15
 width_cm = 7
 height_cm = 5
 
+def calculate_sea_level_equivalent(value):
+    rho_ice = 0.9167  #Gt km-3
+    area_ocean = 3.618e8 # km^2
+    height_ocean = 1e-6 # km (1 mm)
+    # Volume of water required to raise global sea levels by 1 mm
+    vol_water = area_ocean*height_ocean # km^3 of water
+    mass_ice = value * rho_ice # Gt
+    return mass_ice*(1 / vol_water)
+
 def read_experiment_file(filename):
     glacier_run = pd.read_csv(filename, index_col='rgi_id')
     tail = os.path.basename(filename)
@@ -31,7 +40,6 @@ def read_experiment_file_vbsl(filename):
     total_volume = glacier_run['volume bsl'].sum()
     total_volume_c = glacier_run['volume bsl with calving'].sum()
     return total_volume, total_volume_c, tail
-
 
 # Reading the data
 MAIN_PATH = os.path.expanduser('~/cryo_calving_2018/')
@@ -90,20 +98,26 @@ volume_with_calving = [volume_per_exp_calving[0] + vol_no_calving[0],
 #print(exp_name)
 #print(volume_with_calving)
 
-
 # Making a data frame
 all_vol  = [vol_no_calving + volume_with_calving][0]
 all_names = [exp_name_no_calving + exp_name][0]
+
+all_vol_sle = []
+for i in all_vol:
+    all_vol_sle.append(calculate_sea_level_equivalent(i))
+
+#print('Sea level equivalent mm', all_vol_sle)
 
 exp_name_number = ['1', '2', '3',
                    '4', '5', '6']
 
 d = {'Experiment No': exp_name_number, 'Alaska volume ($km^{3}$)': all_vol,
-     'Original glacier_char name': all_names}
+     'Alaska volume (SLE mm)': all_vol_sle,
+     'Original glacier_char file name': all_names}
 
 df = pd.DataFrame(data=d)
 
-print(df)
+print('TABLE 1', df)
 
 ## TODO a nicer way to plot this
 # fig1 = plt.figure(1, figsize=(width_cm, height_cm))
@@ -127,7 +141,7 @@ if gather_volume_bsl:
                                           d +'/volume_below_sea_level.csv'))
 
     full_dir_name = sorted(full_dir_name)
-    print(full_dir_name)
+    #print(full_dir_name)
 
     # Reading no calving experiments
     vbsl_per_exp = []
@@ -143,12 +157,25 @@ if gather_volume_bsl:
     exp_name_number = ['1', '2', '3',
                        '4']
 
-    print(exp_name, vbsl_per_exp, vbsl_per_exp_c)
+    #print(exp_name, vbsl_per_exp, vbsl_per_exp_c)
 
-    d = {'Experiment No': exp_name_number, 'Vbsl': vbsl_per_exp,
-         'Vbsl with calving': vbsl_per_exp_c,
-         'Original glacier_char name': exp_name}
+    # sea level equivalent
+    vbsl_per_exp_sle = []
+    vbsl_per_exp_c_sle = []
+    for i, j in zip(vbsl_per_exp, vbsl_per_exp_c):
+        vbsl_per_exp_sle.append(calculate_sea_level_equivalent(i))
+        vbsl_per_exp_c_sle.append(calculate_sea_level_equivalent(j))
+
+    #print('sea level equivalent vbsl no calving', vbsl_per_exp_sle)
+    #print('sea level equivalent vbsl calving', vbsl_per_exp_c_sle)
+
+
+    d = {'Experiment No': exp_name_number, 'Vbsl (km^3)': vbsl_per_exp,
+         'Vbsl (mm SLE)': vbsl_per_exp_sle,
+         'Vbsl with calving (km^3)': vbsl_per_exp_c,
+         'Vbsl with calving (mm SLE)': vbsl_per_exp_c_sle,
+         'Original glacier_char file name': exp_name}
 
     ds = pd.DataFrame(data=d)
-
-    print(ds)
+    print('-----------------------------------')
+    print('TABLE 2',ds)
