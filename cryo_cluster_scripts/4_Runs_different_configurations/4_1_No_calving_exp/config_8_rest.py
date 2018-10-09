@@ -55,6 +55,7 @@ cfg.PARAMS['correct_for_neg_flux'] = True
 cfg.PARAMS['filter_for_neg_flux'] = True
 # We will needs this set to true for the calving loop
 cfg.PARAMS['allow_negative_mustar'] = True
+cfg.PARAMS['inversion_glen_a'] = 2.3346e-24
 
 # We use intersects
 path = utils.get_rgi_intersects_region_file(rgi_region, version=rgi_version)
@@ -117,10 +118,10 @@ if RUN_CLIMATE_PREPRO:
 if RUN_INVERSION:
     # Inversion tasks
     execute_entity_task(tasks.prepare_for_inversion, gdirs)
-    execute_entity_task(tasks.volume_inversion, gdirs, glen_a=cfg.A, fs=0.0)
+    execute_entity_task(tasks.volume_inversion, gdirs, glen_a=2.3346e-24, fs=cfg.FS)
 
 # Compile output
-utils.glacier_characteristics(gdirs, filesuffix='_Lake_land_no_calving_fs_zero_')
+utils.glacier_characteristics(gdirs, filesuffix='_Lake_land_no_calving_cfgFS_')
 
 # Log
 m, s = divmod(time.time() - start, 60)

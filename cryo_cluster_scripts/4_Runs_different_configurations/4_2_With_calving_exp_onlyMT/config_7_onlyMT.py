@@ -62,7 +62,7 @@ cfg.PARAMS['correct_for_neg_flux'] = False
 cfg.PARAMS['filter_for_neg_flux'] = False
 # We will needs this set to true for the calving loop
 cfg.PARAMS['allow_negative_mustar'] = True
-cfg.PARAMS['inversion_glen_a'] = 3.339e-24
+cfg.PARAMS['inversion_glen_a'] = 1.611e-24
 
 # We use intersects
 path = utils.get_rgi_intersects_region_file(rgi_region, version=rgi_version)
@@ -99,7 +99,7 @@ log.info('Number of glaciers: {}'.format(len(rgidf)))
 # -----------------------------------
 gdirs = workflow.init_glacier_regions(rgidf)
 
-k = 0.707
+k = 0.6124
 
 # Defining a calving function
 def calving_from_depth(gdir, k):
@@ -163,13 +163,13 @@ if RUN_CLIMATE_PREPRO:
     tasks.distribute_t_stars(gdirs)
     execute_entity_task(tasks.apparent_mb, gdirs)
 
-suf = 'glen_a'+str(3.339e-24)+'_fs_zero'+str(k)
+suf = 'glen_a'+str(1.611e-24)+'_cfgFS'+str(k)
 
 if RUN_INVERSION:
     # Inversion tasks
     execute_entity_task(tasks.prepare_for_inversion, gdirs)
-    execute_entity_task(tasks.volume_inversion, gdirs, glen_a=3.339e-24,
-                        fs=0.0)
+    execute_entity_task(tasks.volume_inversion, gdirs, glen_a=1.611e-24,
+                        fs=cfg.FS)
     execute_entity_task(tasks.filter_inversion_output, gdirs)
 
     # Log
@@ -191,8 +191,8 @@ if With_calving:
     execute_entity_task(tasks.apparent_mb, gdirs)
     execute_entity_task(tasks.prepare_for_inversion, gdirs,
                         add_debug_var=True)
-    execute_entity_task(tasks.volume_inversion, gdirs, glen_a=3.339e-24,
-                        fs=0.0)
+    execute_entity_task(tasks.volume_inversion, gdirs, glen_a=1.611e-24,
+                        fs=cfg.FS)
 
     for gdir in gdirs:
         cl = gdir.read_pickle('inversion_output')[-1]
@@ -237,7 +237,7 @@ if With_calving:
             tasks.distribute_t_stars([gdir], minimum_mustar=0.)
             tasks.apparent_mb(gdir)
             tasks.prepare_for_inversion(gdir, add_debug_var=True)
-            tasks.volume_inversion(gdir, glen_a=3.339e-24, fs=0.0)
+            tasks.volume_inversion(gdir, glen_a=1.611e-24, fs=cfg.FS)
             df = pd.read_csv(gdir.get_filepath('local_mustar')).iloc[0]
             mu_star = df['mu_star']
 
@@ -263,7 +263,7 @@ if With_calving:
 
                 # Inversion with calving, inv optimization is not iterative
                 tasks.prepare_for_inversion(gdir, add_debug_var=True)
-                tasks.volume_inversion(gdir, glen_a=3.339e-24, fs=0.0)
+                tasks.volume_inversion(gdir, glen_a=1.611e-24, fs=cfg.FS)
 
                 df = pd.read_csv(gdir.get_filepath('local_mustar')).iloc[0]
                 mu_star = df['mu_star']
@@ -293,8 +293,8 @@ if With_calving:
     execute_entity_task(tasks.apparent_mb, gdirs)
     execute_entity_task(tasks.prepare_for_inversion, gdirs,
                         add_debug_var=True)
-    execute_entity_task(tasks.volume_inversion, gdirs, glen_a=3.339e-24,
-                        fs=0.0)
+    execute_entity_task(tasks.volume_inversion, gdirs, glen_a=1.611e-24,
+                        fs=cfg.FS)
 
     # Assigning to each tidewater glacier its own last_calving flux calculated
     for gdir in gdirs:
@@ -323,7 +323,11 @@ if With_calving:
     execute_entity_task(tasks.prepare_for_inversion, gdirs,
                         add_debug_var=True)
     execute_entity_task(tasks.volume_inversion, gdirs,
-                        glen_a=3.339e-24, fs=0.0, filesuffix='_with_calving_')
+                        glen_a=1.611e-24, fs=cfg.FS)
+
+    # Write out glacier statistics
+    utils.glacier_characteristics(gdirs, filesuffix='_with_calving_' + suf,
+                                  inversion_only=True)
 
     m, s = divmod(time.time() - start, 60)
     h, m = divmod(m, 60)

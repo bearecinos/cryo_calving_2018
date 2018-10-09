@@ -1,4 +1,4 @@
-# This will run OGGM on the Alaska Region without calving
+# This will run OGGM on the Alaska Region with calving
 
 from __future__ import division
 import oggm

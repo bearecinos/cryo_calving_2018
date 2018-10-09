@@ -15,14 +15,14 @@ from matplotlib import rcParams
 rcParams['axes.labelsize'] = 20
 rcParams['xtick.labelsize'] = 20
 rcParams['ytick.labelsize'] = 20
-rcParams['legend.fontsize'] = 16
+rcParams['legend.fontsize'] = 18
 # Set figure width and height in cm
 width_cm = 14
-height_cm = 8
+height_cm = 7
 
 
 # Reading the data
-MAIN_PATH = os.path.expanduser('~/cryo_calving_2018/')
+MAIN_PATH = os.path.expanduser('~/Documents/cryo_calving_2018_version2/')
 
 plot_path = os.path.join(MAIN_PATH, 'plots/')
 
@@ -49,7 +49,7 @@ print(k)
 
 def read_experiment_file(filename):
     glacier = pd.read_csv(filename)
-    glacier = glacier[['rgi_id','terminus_type', 'calving_flux', 'mu_star']]
+    glacier = glacier[['rgi_id','terminus_type', 'calving_flux']]#, 'mu_star']]
     calving = glacier['calving_flux']
     return calving
 
@@ -80,6 +80,8 @@ data_frame2 = cf2.T
 
 #Observations
 obs = np.repeat(15.11 * 1.091, len(k))
+
+###################### Fiting data to linear model #######################################
 
 #Fitting the data to a linear model
 A = np.column_stack([k**0, k])
@@ -124,26 +126,142 @@ k_intersection_two = (b3 - b2) / (m2 - m3)
 print(k_intersection_one)
 print(k_intersection_two)
 
+################### reading Glen A exp ##########################################
 
-my_labels_fs = {"x1": "A = OGGM default, fs = 0.0",
+EXPERIMENT_PATH_A = os.path.join(MAIN_PATH,
+                'output_data/3_Sensitivity_studies_k_A_fs/3_2_glen_A_exp/')
+
+#Glen a x factor directories
+WORKING_DIR_zero_A = os.path.join(EXPERIMENT_PATH_A,
+                                'glena_exp1/glacier_char*.csv')     #0
+WORKING_DIR_one_A = os.path.join(EXPERIMENT_PATH_A,
+                                'glena_exp2/glacier_char*.csv')    #1
+WORKING_DIR_two_A = os.path.join(EXPERIMENT_PATH_A,
+                                'glena_exp3/glacier_char*.csv')      #2
+WORKING_DIR_three_A = os.path.join(EXPERIMENT_PATH_A,
+                                'glena_exp4/glacier_char*.csv')      #3
+
+filenames_A = []
+filenames_A.append(sorted(glob.glob(WORKING_DIR_zero_A)))
+filenames_A.append(sorted(glob.glob(WORKING_DIR_one_A)))
+filenames_A.append(sorted(glob.glob(WORKING_DIR_two_A)))
+filenames_A.append(sorted(glob.glob(WORKING_DIR_three_A)))
+
+# Glen_a array or FS
+factors = [0.6, 0.7, 0.8, 0.9, 1, 1.1, 1.2, 1.3, 1.4, 1.5, 1.6, 1.7]
+glen_a = np.asarray(factors)*2.4e-24
+
+calvings_A = []
+
+for elem in filenames_A:
+    res = []
+    for f in elem:
+        res.append(read_experiment_file(f))
+    calvings_A.append(res)
+
+calving_fluxes_A = []
+
+for cf in calvings_A:
+    calving_fluxes_A.append(pd.concat([c for c in cf], axis=1))
+    calving_fluxes_A[-1] = calving_fluxes_A[-1][(calving_fluxes_A[-1].T != 0).any()]
+    calving_fluxes_A[-1] = calving_fluxes_A[-1].reset_index(drop=True)
+
+
+cf0_A = calving_fluxes_A[0]
+cf1_A = calving_fluxes_A[1]
+
+cf2_A = calving_fluxes_A[2]
+cf3_A = calving_fluxes_A[3]
+
+cf0_A = cf0_A['calving_flux'].sum(axis=0)
+cf1_A = cf1_A['calving_flux'].sum(axis=0)
+
+cf2_A = cf2_A['calving_flux'].sum(axis=0)
+cf3_A = cf3_A['calving_flux'].sum(axis=0)
+
+data_frame0_A = cf0_A.T
+data_frame1_A = cf1_A.T
+
+data_frame2_A = cf2_A.T
+data_frame3_A = cf3_A.T
+
+my_labels_glena = {"x0": "fs = 0.0, $k_{1}$ = 0.61",
+                   "x1": "fs = 0.0, $k_{2}$ = 0.70",
+                   "x2": "fs = OGGM default, $k_{1}$ = 0.61",
+                   "x3": "fs = OGGM default, $k_{2}$ = 0.70"}
+
+####################### Reading fs experiments ##################################3
+EXPERIMENT_PATH_fs = os.path.join(MAIN_PATH,
+                'output_data/3_Sensitivity_studies_k_A_fs/3_3_fs_exp/')
+
+WORKING_DIR_one_fs = os.path.join(EXPERIMENT_PATH_fs, 'fs_exp1/glacier_char*.csv') #1
+
+WORKING_DIR_two_fs = os.path.join(EXPERIMENT_PATH_fs, 'fs_exp2/glacier_char*.csv')#2
+
+
+filenames_fs = []
+filenames_fs.append(sorted(glob.glob(WORKING_DIR_one_fs)))
+filenames_fs.append(sorted(glob.glob(WORKING_DIR_two_fs)))
+
+# Glen_a array or FS
+fsfactors = [0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1, 1.1, 1.2]
+fs = np.asarray(fsfactors)*5.7e-20
+
+calvings_fs = []
+
+for elem in filenames_fs:
+    res = []
+    for f in elem:
+        res.append(read_experiment_file(f))
+    calvings_fs.append(res)
+
+calving_fluxes_fs = []
+
+for cf in calvings_fs:
+    calving_fluxes_fs.append(pd.concat([c for c in cf], axis=1))
+    calving_fluxes_fs[-1] = calving_fluxes_fs[-1][(calving_fluxes_fs[-1].T != 0).any()]
+    calving_fluxes_fs[-1] = calving_fluxes_fs[-1].reset_index(drop=True)
+
+cf1_fs = calving_fluxes_fs[0]
+cf2_fs = calving_fluxes_fs[1]
+
+cf1_fs = cf1_fs['calving_flux'].sum(axis=0)
+cf2_fs = cf2_fs['calving_flux'].sum(axis=0)
+
+data_frame1_fs = cf1_fs.T
+data_frame2_fs = cf2_fs.T
+
+my_labels_fs = {"x1": "A = OGGM default, $k_{1}$ = 0.61",
+                "x2": "A = OGGM default, $k_{2}$ = 0.70"}
+
+
+######################################## plots ######################################
+
+my_labels_k = {"x1": "A = OGGM default, fs = 0.0",
                 "x2": "A = OGGM default, fs = OGGM default"}
 
+from matplotlib import gridspec
+from matplotlib.ticker import ScalarFormatter
+
 # Create figure and axes instances
-fig1 = plt.figure(1, figsize=(width_cm, height_cm))
+fig1 = plt.figure(1, figsize=(width_cm, height_cm*3))
+
+gs = gridspec.GridSpec(3, 1, hspace=0.2)
 
 #sns.set_color_codes("colorblind")
+plt.subplot(gs[0])
 sns.set_style("white")
 
 plt.plot(k, data_frame1, "o", color=sns.xkcd_rgb["ocean blue"],
              linewidth=2.5, markersize=12,
-             label=my_labels_fs["x1"])
+             label=my_labels_k["x1"])
 
 plt.plot(k, intercept1 + slope1 * k, color=sns.xkcd_rgb["ocean blue"],
              linewidth=2.5, label='fitted line 1')
 
 plt.plot(k, data_frame2, "o", color=sns.xkcd_rgb["teal green"],
              linewidth=2.5, markersize=12,
-             label=my_labels_fs["x2"])
+             label=my_labels_k["x2"])
 
 plt.plot(k, intercept2 + slope2 * k, color=sns.xkcd_rgb["teal green"],
              linewidth=2.5, label='fitted line 2')
@@ -151,19 +269,97 @@ plt.plot(k, intercept2 + slope2 * k, color=sns.xkcd_rgb["teal green"],
 plt.plot(k, intercept3 + slope3 * k, '--', color='black', linewidth=3.0,
              label='Regional calving flux. (McNabb et al., 2015)')
 
-#plt.xticks(k)
-plt.yticks(np.arange(0, 90, 20.0))
-plt.ylabel('Alaska calving flux $km³.yr^{-1}$')
-plt.xlabel('Calving constant k ($\mathregular{yr^{-1}}$) ')
-plt.legend(bbox_to_anchor=(0.6, 1))
-plt.text(0.4, 57.0, 'Intercepts to observations', fontsize=16)
-plt.text(0.4,52,'$k_{1}$ = 0.6124 +/- 0.0023', fontsize=16)
-plt.text(0.4, 47, '$k_{2}$ = 0.707 +/- 0.004', fontsize=16)
-letkm = dict(color='black', ha='left', va='top', fontsize=20,
-                 bbox=dict(facecolor='white', edgecolor='white'))
+plt.fill_between(k,(intercept3 + slope3 * k)-3.96, (intercept3 + slope3 * k)+3.96,
+                 color=sns.xkcd_rgb["grey"], alpha=0.3)
 
-#plt.text(-0.1, 90, 'a', **letkm)
+plt.yticks(np.arange(0, 90, 20.0))
+
+plt.ylabel('Alaska calving flux \n [$km³.yr^{-1}$]')
+plt.xlabel('Calving constant k [$\mathregular{yr^{-1}}$] ')
+plt.legend(bbox_to_anchor=(0.02, 0.8), loc='center left', borderaxespad=0.)
+#plt.legend(bbox_to_anchor=(0.615, 1))
+plt.text(0.4, 47.0, 'Intercepts to observations', fontsize=18)
+plt.text(0.4,41,'$k_{1}$ = 0.61', fontsize=18)
+plt.text(0.4, 35, '$k_{2}$ = 0.70', fontsize=18)
+letkm = dict(color='black', ha='left', va='top', fontsize=20,
+                 bbox=dict(facecolor='white', edgecolor='black'))
+plt.text(0.14, 84.5, 'a', **letkm)
 plt.margins(0.05)
 #plt.show()
-plt.savefig(os.path.join(plot_path, 'k_factors.png'), dpi=150,
+#plt.savefig(os.path.join(plot_path, 'k_factors.png'), dpi=150,
+#                   bbox_inches='tight')
+
+
+
+#fig2 = plt.figure(2, figsize=(width_cm, height_cm))
+plt.subplot(gs[1])
+sns.set_color_codes("colorblind")
+sns.set_style("white")
+
+plt.plot(glen_a, data_frame0_A, linestyle="--", #color=sns.xkcd_rgb["forest green"],
+             label=my_labels_glena["x0"], linewidth=2.5)
+
+plt.plot(glen_a, data_frame1_A, linestyle="--", #color=sns.xkcd_rgb["green"],
+             label=my_labels_glena["x1"], linewidth=2.5)
+
+plt.plot(glen_a, data_frame2_A, #color=sns.xkcd_rgb["teal"],
+             label=my_labels_glena["x2"], linewidth=2.5)
+
+plt.plot(glen_a, data_frame3_A, #color=sns.xkcd_rgb["turquoise"],
+             label=my_labels_glena["x3"], linewidth=2.5)
+
+plt.plot(glen_a, np.repeat(15.11*1.091, len(glen_a)), '--', color='black',
+             label='Regional calving flux. (McNabb et al., 2015)', linewidth=3.0)
+
+plt.fill_between(glen_a,np.repeat(15.11*1.091-3.96, len(glen_a)), np.repeat(15.11*1.091+3.96, len(glen_a)),
+                 color=sns.xkcd_rgb["grey"], alpha=0.3)
+
+plt.xticks(glen_a)
+plt.yticks(np.arange(0, 35, 3.0))#max(data_frame2)
+
+#plt.gca().xaxis.set_major_formatter(ScalarFormatter())
+
+plt.ylabel('Alaska calving flux \n [$km³.yr^{-1}$]')
+plt.xlabel('Glen A [$\mathregular{s^{−1}} \mathregular{Pa^{−3}}$]')
+plt.legend(bbox_to_anchor=(0.4, 0.8), loc='center left', borderaxespad=0.)
+letkm = dict(color='black', ha='left', va='top', fontsize=20,
+                 bbox=dict(facecolor='white', edgecolor='black'))
+plt.text(glen_a[0]-1.15e-25, 27.25, 'b', **letkm)
+plt.margins(0.05)
+#plt.show()
+
+
+
+# Create figure and axes instances
+#fig3 = plt.figure(3, figsize=(width_cm, height_cm))
+ax = plt.subplot(gs[2])
+#sns.set_color_codes("dark")
+sns.set_color_codes("colorblind")
+sns.set_style("white")
+
+plt.plot(fs, data_frame1_fs,
+         label=my_labels_fs["x1"], linewidth=2.5)
+
+plt.plot(fs, data_frame2_fs,
+         label=my_labels_fs["x2"], linewidth=2.5)
+
+plt.plot(fs, np.repeat(15.11 * 1.091, len(fs)), '--', color='black',
+         label='Regional calving flux. (McNabb et al., 2015)', linewidth=3.0)
+
+plt.fill_between(fs,np.repeat(15.11*1.091-3.96, len(fs)), np.repeat(15.11*1.091+3.96, len(fs)),
+                 color=sns.xkcd_rgb["grey"], alpha=0.3)
+
+plt.xticks(fs)
+#plt.yticks(np.arange(min(data_frame2_fs),max(data_frame2_fs),1))
+plt.yticks(np.arange(0, 25, 1))
+plt.ylabel('Alaska calving flux \n [$km³.yr^{-1}$]')
+plt.xlabel('Sliding parameter $f_{s}$ [$\mathregular{s^{−1}} \mathregular{Pa^{−3}}$]')
+plt.legend()
+letkm = dict(color='black', ha='left', va='top', fontsize=20,
+                 bbox=dict(facecolor='white', edgecolor='black'))
+plt.text(-3e-21, 20.73, 'c', **letkm)
+plt.margins(0.05)
+plt.subplots_adjust(hspace=0.2)
+#plt.show()
+plt.savefig(os.path.join(plot_path, 'sensitivity.pdf'), dpi=150,
                    bbox_inches='tight')

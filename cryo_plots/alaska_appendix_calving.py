@@ -12,11 +12,11 @@ from matplotlib import rcParams
 
 
 # Set figure width and height in cm
-width_cm = 20
-height_cm = 5
+width_cm = 14
+height_cm = 7
 
 
-MAIN_PATH = os.path.expanduser('~/cryo_calving_2018/')
+MAIN_PATH = os.path.expanduser('~/Documents/cryo_calving_2018_version2/')
 
 plot_path = os.path.join(MAIN_PATH, 'plots/')
 
@@ -48,6 +48,7 @@ df = pd.DataFrame(data=d)
 diff = df['McNabb et al. (2015)'] - df['OGGM rectangular']
 diff_norec = df['McNabb et al. (2015)'] - df['OGGM parabolic']
 
+
 fig = plt.figure(figsize=(width_cm, height_cm))
 sns.set()
 sns.set_color_codes("colorblind")
@@ -69,9 +70,9 @@ plt.ylabel('Calving flux differences (km³$yr^{-1}$)')
 plt.xticks(ind, labels, rotation='vertical')
 plt.legend((p1[0], p2[0]), ('Rectangular bed shape','Parabolic bed shape'))
 plt.margins(0.05)
-#plt.show()
-plt.savefig(os.path.join(plot_path, 'appendixb.png'), dpi=150,
-                 bbox_inches='tight')
+plt.show()
+#plt.savefig(os.path.join(plot_path, 'appendixb.png'), dpi=150,
+#                 bbox_inches='tight')
 
 
 #Create figure and axes instances
@@ -79,6 +80,8 @@ plt.savefig(os.path.join(plot_path, 'appendixb.png'), dpi=150,
 #
 fig = plt.figure(figsize=(width_cm, height_cm))
 sns.set()
+sns.set(style="white", context="talk")
+
 # Plot settings
 rcParams['axes.labelsize'] = 20
 rcParams['xtick.labelsize'] = 20
@@ -101,7 +104,45 @@ plt.ylabel('Calving flux (km³$yr^{-1}$)')
 plt.xticks(ind + graph_width/2, labels, rotation='vertical')
 plt.legend((p1[0], p2[0]), ('OGGM', 'McNabb et al. (2015)'))
 
+plt.show()
+
+#plt.savefig(os.path.join(plot_path, 'appendixa.png'), dpi=150,
+#                 bbox_inches='tight')
+
+
+fig = plt.figure(figsize=(width_cm, height_cm*2))
+sns.set()
+sns.set_color_codes("colorblind")
+sns.set(style="white", context="talk")
+# Plot settings
+rcParams['axes.labelsize'] = 20
+rcParams['xtick.labelsize'] = 20
+rcParams['ytick.labelsize'] = 20
+rcParams['legend.fontsize'] = 16
+N = len(df)
+ind = np.arange(N)
+graph_width = 0.35
+labels = df.index.values
+
+ax1 = plt.subplot(211)
+p1 = plt.bar(ind, df['OGGM rectangular'].values, graph_width)#, yerr=std_oggm)
+p2 = plt.bar(ind+graph_width, df['McNabb et al. (2015)'].values, graph_width)#, yerr=std_fix)
+
+plt.ylabel('Calving flux [km³$yr^{-1}$]')
+plt.setp(ax1.get_xticklabels(), visible=False)
+plt.legend((p1[0], p2[0]), ('OGGM', 'McNabb et al. (2015)'))
+plt.margins(0.05)
+
+ax2 = plt.subplot(212, sharex=ax1)
+sns.set_color_codes("muted")
+p3 = plt.bar(ind, diff, graph_width, color=sns.xkcd_rgb["pale red"])
+p4 = plt.bar(ind+graph_width, diff_norec, graph_width, color=sns.xkcd_rgb["brown"])
+
+plt.ylabel('Calving flux differences')
+plt.xticks(ind + graph_width/2, labels, rotation='vertical')
+plt.legend((p3[0], p4[0]), ('Rectangular bed shape','Parabolic bed shape'), loc='lower right')
+plt.margins(0.05)
 #plt.show()
 
-plt.savefig(os.path.join(plot_path, 'appendixa.png'), dpi=150,
+plt.savefig(os.path.join(plot_path, 'appendix.pdf'), dpi=150,
                  bbox_inches='tight')

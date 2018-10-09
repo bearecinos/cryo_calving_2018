@@ -20,7 +20,7 @@ import matplotlib.pyplot as plt
 
 
 cfg.initialize()
-MAIN_PATH = os.path.expanduser('~/cryo_calving_2018/')
+MAIN_PATH = os.path.expanduser('~/Documents/cryo_calving_2018_version2/')
 
 WORKING_DIR = os.path.join(MAIN_PATH,
                            'output_data/1_Columbia_Glacier_runs/2_calving/')
@@ -106,11 +106,11 @@ def mean_d(data, ref):
         return np.sum(abs_diff) / (data.size * ref.size)
 
 # figure 1  ---------------
-Plot_fig_1 = False
+Plot_fig_1 = True
 
 if Plot_fig_1:
 
-    f = plt.figure(figsize=(10, 12))
+    f = plt.figure(figsize=(14, 12))
     from mpl_toolkits.axes_grid1 import ImageGrid
 
     axs = ImageGrid(f, 111,  # as in plt.subplot(111)
@@ -129,27 +129,27 @@ if Plot_fig_1:
 
     graphics.plot_centerlines(gdir, ax=axs[0], title='', add_colorbar=True,
                                     lonlat_contours_kwargs=llkw,
-                                    cbar_ax=axs[0].cax, add_scalebar=True)
+                                    cbar_ax=axs[0].cax, add_scalebar=False)
     xt, yt = 2.45, 2.45
     axs[0].text(xt, yt, 'a', **letkm)
 
     graphics.plot_catchment_width(gdir, ax=axs[1], title='', corrected=True,
                                    add_colorbar=False,
                                    lonlat_contours_kwargs=llkw,
-                                   add_scalebar=False)
+                                   add_scalebar=True)
     axs[1].text(xt, yt, 'b', **letkm)
 
     plt.tight_layout()
     #plt.show()
-    plt.savefig(os.path.join(plot_path,'workflow_columbia.png'),
+    plt.savefig(os.path.join(plot_path,'workflow_columbia.pdf'),
                              dpi=150, bbox_inches='tight')
 
 # figure 2  ---------------
-Plot_fig_2 = False
+Plot_fig_2 = True
 
 if Plot_fig_2:
 
-    f = plt.figure(figsize=(10, 12))
+    f = plt.figure(figsize=(14, 12))
     from mpl_toolkits.axes_grid1 import ImageGrid
 
     axs = ImageGrid(f, 111,  # as in plt.subplot(111)
@@ -180,9 +180,9 @@ if Plot_fig_2:
     axs[1].text(xt, yt, 'b', **letkm)
 
     plt.tight_layout()
-    plt.show()
-    #plt.savefig(os.path.join(plot_path, 'inversion_columbia.png'),
-    #                         dpi=150, bbox_inches='tight')
+    #plt.show()
+    plt.savefig(os.path.join(plot_path, 'inversion_columbia.png'),
+                             dpi=150, bbox_inches='tight')
 
 # figure 3 -------------
 Plot_fig_3 = True
@@ -226,22 +226,43 @@ if Plot_fig_3:
     fig = plt.figure(figsize=(12,6))
 
     ax = fig.add_axes([0.07, 0.08, 0.7, 0.8])
-    ax.plot(x, bed, color='grey', linewidth=2.5, label='Bed no calving')
-    ax.plot(x, bed_c, color='k', linewidth=2.5, label = 'Bed with calving')
+    ax.plot(x, bed, color='grey', linewidth=2.5, label='Bed without frontal ablation')
+    ax.plot(x, bed_c, color='k', linewidth=2.5, label = 'Bed with frontal ablation')
     ax.plot(x, surface, color='r', linewidth=2.5, label = 'Glacier surface')
     ax.plot(x, thick07_h, color='green', linestyle=':', linewidth=2.5,
-            label='Observed bed 2007, (McNabb et al, 2012)')
+            label='Calculated glacier bed 2007 (McNabb et al, 2012)')
     ax.axhline(y=0, color='navy', linewidth=2.5, label= 'Sea level')
     ax.legend(loc='upper right')
-    ax.set_xlabel('Distance along flowline (Km)')
-    ax.set_ylabel('Altitude (m)')
+    ax.set_xlabel('Distance along flowline [km]')
+    ax.set_ylabel('Altitude [m]')
     letkm = dict(color='black', ha='left', va='top', fontsize=20,
                   bbox=dict(facecolor='white', edgecolor='black'))
     #ax.text(-10, 3500, 'c', **letkm)
     plt.tight_layout()
-    plt.show()
-    #plt.savefig(os.path.join(plot_path, 'columbia_profile.png'),
-    #                         dpi=150, bbox_inches='tight')
+    #plt.show()
+    plt.savefig(os.path.join(plot_path, 'columbia_profile.png'),
+                             dpi=150, bbox_inches='tight')
+
+
+
+    # # Computing spearman correlation because data is not normally distributed
+    # rho, p = stats.spearmanr(thick07_h, bed)
+    # rho_c, p_c = stats.spearmanr(thick07_h, bed_c)
+    #
+    # print('No calving and observations', rho, p)
+    # print('With calving and observations', rho_c, p_c)
+    #
+    # alphacor = 0.05
+    #
+    # if p > alphacor:
+    #     print('Samples are uncorrelated (fail to reject H0) p=%.5f', p)
+    # else:
+    #     print('Samples are correlated (reject H0) p=%.5f', p)
+    #
+    # if p_c > alphacor:
+    #     print('Samples are uncorrelated (fail to reject H0) p=%.5f', p_c)
+    # else:
+    #     print('Samples are correlated (reject H0) p=%.5f', p_c)
 
     # calculating RMSD for oggm profiles and observations
 

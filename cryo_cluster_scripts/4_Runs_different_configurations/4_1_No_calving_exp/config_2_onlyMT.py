@@ -50,7 +50,6 @@ Columbia_prepro = os.path.join(MAIN_PATH,
 Columbia_dir = os.path.join(Columbia_prepro,
                             'RGI60-01/RGI60-01.10/RGI60-01.10689')
 
-
 cfg.PATHS['working_dir'] = WORKING_DIR
 # Use multiprocessing
 cfg.PARAMS['use_multiprocessing'] = True
@@ -131,10 +130,10 @@ if RUN_CLIMATE_PREPRO:
 if RUN_INVERSION:
     # Inversion tasks
     execute_entity_task(tasks.prepare_for_inversion, gdirs)
-    execute_entity_task(tasks.volume_inversion, gdirs, glen_a=cfg.A, fs=cfg.FS)
+    execute_entity_task(tasks.volume_inversion, gdirs, glen_a=cfg.A, fs=0.0)
 
 # Compile output
-utils.glacier_characteristics(gdirs, filesuffix='_no_calving_cfgFS_')
+utils.glacier_characteristics(gdirs, filesuffix='_no_calving_fs_zero_')
 
 # Log
 m, s = divmod(time.time() - start, 60)

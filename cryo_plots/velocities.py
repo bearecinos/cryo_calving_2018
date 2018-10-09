@@ -19,7 +19,7 @@ height_cm = 8
 
 
 # Reading glacier directories per experiment
-MAIN_PATH = os.path.expanduser('~/cryo_calving_2018/')
+MAIN_PATH = os.path.expanduser('~/Documents/cryo_calving_2018_version2/')
 
 plot_path = os.path.join(MAIN_PATH, 'plots/')
 
@@ -91,7 +91,7 @@ for gdir, gdir_c in zip(gdirs_one,gdirs_two):
         plt.plot(x_c, vel_c-vel, '-', label=gdir.rgi_id)
         plt.legend(loc='center left', bbox_to_anchor=(1.0, 0.5))
         plt.xlabel('Normalised distance along the main flowline', size=16)
-        plt.ylabel('Velocity $km.yr^{-1}$', size=16)
+        plt.ylabel('Velocity difference [$km.yr^{-1}$]', size=16)
 
     # plt.figure(2)
     # if np.abs(diff_angle[-1]) < 0.025:
@@ -104,5 +104,5 @@ plt.margins(0.05)
 #plt.show()
 
 
-plt.savefig(os.path.join(plot_path,'velocity_differences.png'),
+plt.savefig(os.path.join(plot_path,'velocity_differences.pdf'),
                               dpi=150, bbox_inches='tight')

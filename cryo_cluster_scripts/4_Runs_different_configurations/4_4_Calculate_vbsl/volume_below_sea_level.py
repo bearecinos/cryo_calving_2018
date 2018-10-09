@@ -9,7 +9,7 @@ import warnings
 cfg.initialize()
 # Reading glacier directories per experiment
 
-MAIN_PATH = os.path.expanduser('~/cryo_calving_2018/')
+MAIN_PATH = os.path.expanduser('~/Documents/cryo_calving_2018_version2/')
 
 exp_dir_path = os.path.join(MAIN_PATH,
 'output_data/4_Runs_different_configurations/4_3_With_calving_exp_onlyMT_vbsl')

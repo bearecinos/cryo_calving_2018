@@ -162,13 +162,13 @@ if RUN_CLIMATE_PREPRO:
     tasks.distribute_t_stars(gdirs)
     execute_entity_task(tasks.apparent_mb, gdirs)
 
-suf = '_cfgA_fs_zero'+str(k)
+suf = '_cfgA_cfgFS'+str(k)
 
 if RUN_INVERSION:
     # Inversion tasks
     execute_entity_task(tasks.prepare_for_inversion, gdirs)
     execute_entity_task(tasks.volume_inversion, gdirs, glen_a=cfg.A,
-                        fs=0.0)
+                        fs=cfg.FS)
     execute_entity_task(tasks.filter_inversion_output, gdirs)
 
     # Log
@@ -191,7 +191,7 @@ if With_calving:
     execute_entity_task(tasks.prepare_for_inversion, gdirs,
                         add_debug_var=True)
     execute_entity_task(tasks.volume_inversion, gdirs, glen_a=cfg.A,
-                        fs=0.0)
+                        fs=cfg.FS)
 
     for gdir in gdirs:
         cl = gdir.read_pickle('inversion_output')[-1]
@@ -236,7 +236,7 @@ if With_calving:
             tasks.distribute_t_stars([gdir], minimum_mustar=0.)
             tasks.apparent_mb(gdir)
             tasks.prepare_for_inversion(gdir, add_debug_var=True)
-            tasks.volume_inversion(gdir, glen_a=cfg.A, fs=0.0)
+            tasks.volume_inversion(gdir, glen_a=cfg.A, fs=cfg.FS)
             df = pd.read_csv(gdir.get_filepath('local_mustar')).iloc[0]
             mu_star = df['mu_star']
 
@@ -262,7 +262,7 @@ if With_calving:
 
                 # Inversion with calving, inv optimization is not iterative
                 tasks.prepare_for_inversion(gdir, add_debug_var=True)
-                tasks.volume_inversion(gdir, glen_a=cfg.A, fs=0.0)
+                tasks.volume_inversion(gdir, glen_a=cfg.A, fs=cfg.FS)
 
                 df = pd.read_csv(gdir.get_filepath('local_mustar')).iloc[0]
                 mu_star = df['mu_star']
@@ -293,7 +293,7 @@ if With_calving:
     execute_entity_task(tasks.prepare_for_inversion, gdirs,
                         add_debug_var=True)
     execute_entity_task(tasks.volume_inversion, gdirs, glen_a=cfg.A,
-                        fs=0.0)
+                        fs=cfg.FS)
 
     # Assigning to each tidewater glacier its own last_calving flux calculated
     for gdir in gdirs:
@@ -322,7 +322,7 @@ if With_calving:
     execute_entity_task(tasks.prepare_for_inversion, gdirs,
                         add_debug_var=True)
     execute_entity_task(tasks.volume_inversion, gdirs,
-                        glen_a=cfg.A, fs=0.0)
+                        glen_a=cfg.A, fs=cfg.FS)
 
     # Write out glacier statistics
     utils.glacier_characteristics(gdirs, filesuffix='_with_calving_' + suf,

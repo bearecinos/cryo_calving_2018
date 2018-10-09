@@ -16,7 +16,7 @@ sns.set_style('whitegrid')
 from cartopy.mpl.gridliner import LONGITUDE_FORMATTER, LATITUDE_FORMATTER
 
 
-MAIN_PATH = os.path.expanduser('~/cryo_calving_2018/')
+MAIN_PATH = os.path.expanduser('~/Documents/cryo_calving_2018_version2/')
 
 plot_path = os.path.join(MAIN_PATH, 'plots/')
 
@@ -90,7 +90,7 @@ ax.add_feature(shape_coast, linewidth=2)
 
 
 dm.plot(ax=ax, transform=ccrs.PlateCarree(),
-        label='Frontal ablation \n observations \n (McNabb et al., 2014)',
+        label='Frontal ablation estimates \n (McNabb et al., 2015)',
         color='orange',marker='o', markersize=400)
 sub_mar.plot(ax=ax, transform=ccrs.PlateCarree(),
         label='Marine terminating glaciers',
