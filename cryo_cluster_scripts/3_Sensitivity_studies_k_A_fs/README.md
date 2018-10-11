@@ -15,7 +15,7 @@ The content of each experiment is the following:
 *  After finding the intersects between the results in 3.1 and the frontal 
 ablation observations, we pick the values of *k* to be (`k1 = 0.6124` and
  `k2 = 0.707`)   
-* The intercepts were found using the plotting script: `~/cryo_calving_2018/cryo_plots/k_factors.py`.   
+* The intercepts were found using the plotting script: `~/cryo_calving_2018/cryo_plots/sensitivity_plot.py`.   
 * We then take these values of *k* and vary the values of *Glen A* from a factor of 
 0.6 - 1.7 x `Glen A = OGGM defalut`. Alternating sliding and no sliding for each *k* value. 
 
