@@ -119,6 +119,9 @@ rcParams['axes.labelsize'] = 20
 rcParams['xtick.labelsize'] = 20
 rcParams['ytick.labelsize'] = 20
 rcParams['legend.fontsize'] = 16
+letkm = dict(color='black', ha='left', va='top', fontsize=20,
+             bbox=dict(facecolor='white', edgecolor='black'))
+
 N = len(df)
 ind = np.arange(N)
 graph_width = 0.35
@@ -128,9 +131,10 @@ ax1 = plt.subplot(211)
 p1 = plt.bar(ind, df['OGGM rectangular'].values, graph_width)#, yerr=std_oggm)
 p2 = plt.bar(ind+graph_width, df['McNabb et al. (2015)'].values, graph_width)#, yerr=std_fix)
 
-plt.ylabel('Calving flux [km³$yr^{-1}$]')
+plt.ylabel('Frontal ablation [km³$yr^{-1}$]')
 plt.setp(ax1.get_xticklabels(), visible=False)
 plt.legend((p1[0], p2[0]), ('OGGM', 'McNabb et al. (2015)'))
+plt.text(-1.75, 6.31, 'a', **letkm)
 plt.margins(0.05)
 
 ax2 = plt.subplot(212, sharex=ax1)
@@ -138,9 +142,10 @@ sns.set_color_codes("muted")
 p3 = plt.bar(ind, diff, graph_width, color=sns.xkcd_rgb["pale red"])
 p4 = plt.bar(ind+graph_width, diff_norec, graph_width, color=sns.xkcd_rgb["brown"])
 
-plt.ylabel('Calving flux differences')
+plt.ylabel('Frontal ablation differences')
 plt.xticks(ind + graph_width/2, labels, rotation='vertical')
 plt.legend((p3[0], p4[0]), ('Rectangular bed shape','Parabolic bed shape'), loc='lower right')
+plt.text(-1.75, 1.632, 'b', **letkm)
 plt.margins(0.05)
 #plt.show()
 

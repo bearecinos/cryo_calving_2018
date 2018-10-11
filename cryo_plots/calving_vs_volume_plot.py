@@ -19,7 +19,7 @@ rcParams['ytick.labelsize'] = 20
 rcParams['legend.fontsize'] = 18
 # Set figure width and height in cm
 width_cm = 12
-height_cm = 6
+height_cm = 7
 
 MAIN_PATH = os.path.expanduser('~/Documents/cryo_calving_2018_version2/')
 
@@ -72,7 +72,7 @@ for j, f in enumerate(filenames):
     else:
         pass
 
-    plt.xlabel('Calving flux $km^{3}$$yr^{-1}$', size=20)
+    plt.xlabel('Frontal ablation $km^{3}$$yr^{-1}$', size=20)
     plt.ylabel('Standardised glacier volume', size=20)
     plt.margins(0.05)
 
@@ -110,7 +110,7 @@ for j, f in enumerate(filenames):
     else:
         pass
         # plt.plot(calving[0:2], mu_star[0:2], color='r', linewidth=2.0)
-    plt.xlabel('Calving flux $km^{3}$$yr^{-1}$', size=20)
+    plt.xlabel('Frontal ablation $km^{3}$$yr^{-1}$', size=20)
     plt.ylabel('Temperature sensitivity ($\mu^{*}$)', size=20)
     plt.margins(0.05)
 
@@ -170,13 +170,14 @@ for j, f in enumerate(filenames):
         pass
     #plt.xlabel('Calving flux $km^{3}$$yr^{-1}$', size=20)
     plt.ylabel('Standardised glacier volume', size=20)
+    plt.text(-0.2, 1.655, 'a', **letkm)
     plt.margins(0.05)
 
 handles, labels = plt.gca().get_legend_handles_labels()
 by_label = OrderedDict(zip(labels, handles))
 plt.legend(by_label.values(), by_label.keys(), loc='upper right')
-letkm = dict(color='black', ha='left', va='top', fontsize=19,
-             bbox=dict(facecolor='white', edgecolor='white'))
+#letkm = dict(color='black', ha='left', va='top', fontsize=19,
+#             bbox=dict(facecolor='white', edgecolor='white'))
 
 plt.subplot(212)
 sns.set_style("white")
@@ -199,10 +200,12 @@ for j, f in enumerate(filenames):
     #             label=my_labels["x4"],  linewidth=2.0)
     else:
         pass
-    plt.xlabel('Calving flux [$km^{3}$$yr^{-1}$]', size=20)
+    plt.xlabel('Frontal ablation [$km^{3}$$yr^{-1}$]', size=20)
     plt.ylabel('Temperature sensitivity \n $\mu^{*}$ [mm $yr^{-1}K^{-1}$]', size=20)
+    plt.text(-0.2, 152.4, 'b', **letkm)
     plt.margins(0.05)
 
+#plt.show()
 plt.savefig(os.path.join(plot_path,'calving_volume_mu.pdf'),
                               dpi=150, bbox_inches='tight')
 

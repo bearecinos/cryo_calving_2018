@@ -267,14 +267,14 @@ plt.plot(k, intercept2 + slope2 * k, color=sns.xkcd_rgb["teal green"],
              linewidth=2.5, label='fitted line 2')
 
 plt.plot(k, intercept3 + slope3 * k, '--', color='black', linewidth=3.0,
-             label='Regional calving flux. (McNabb et al., 2015)')
+             label='Frontal ablation (McNabb et al., 2015)')
 
 plt.fill_between(k,(intercept3 + slope3 * k)-3.96, (intercept3 + slope3 * k)+3.96,
                  color=sns.xkcd_rgb["grey"], alpha=0.3)
 
 plt.yticks(np.arange(0, 90, 20.0))
 
-plt.ylabel('Alaska calving flux \n [$km³.yr^{-1}$]')
+plt.ylabel('Alaska frontal ablation \n [$km³.yr^{-1}$]')
 plt.xlabel('Calving constant k [$\mathregular{yr^{-1}}$] ')
 plt.legend(bbox_to_anchor=(0.02, 0.8), loc='center left', borderaxespad=0.)
 #plt.legend(bbox_to_anchor=(0.615, 1))
@@ -309,7 +309,7 @@ plt.plot(glen_a, data_frame3_A, #color=sns.xkcd_rgb["turquoise"],
              label=my_labels_glena["x3"], linewidth=2.5)
 
 plt.plot(glen_a, np.repeat(15.11*1.091, len(glen_a)), '--', color='black',
-             label='Regional calving flux. (McNabb et al., 2015)', linewidth=3.0)
+             label='Frontal ablation (McNabb et al., 2015)', linewidth=3.0)
 
 plt.fill_between(glen_a,np.repeat(15.11*1.091-3.96, len(glen_a)), np.repeat(15.11*1.091+3.96, len(glen_a)),
                  color=sns.xkcd_rgb["grey"], alpha=0.3)
@@ -319,7 +319,7 @@ plt.yticks(np.arange(0, 35, 3.0))#max(data_frame2)
 
 #plt.gca().xaxis.set_major_formatter(ScalarFormatter())
 
-plt.ylabel('Alaska calving flux \n [$km³.yr^{-1}$]')
+plt.ylabel('Alaska frontal ablation \n [$km³.yr^{-1}$]')
 plt.xlabel('Glen A [$\mathregular{s^{−1}} \mathregular{Pa^{−3}}$]')
 plt.legend(bbox_to_anchor=(0.4, 0.8), loc='center left', borderaxespad=0.)
 letkm = dict(color='black', ha='left', va='top', fontsize=20,
@@ -344,7 +344,7 @@ plt.plot(fs, data_frame2_fs,
          label=my_labels_fs["x2"], linewidth=2.5)
 
 plt.plot(fs, np.repeat(15.11 * 1.091, len(fs)), '--', color='black',
-         label='Regional calving flux. (McNabb et al., 2015)', linewidth=3.0)
+         label='Frontal ablation (McNabb et al., 2015)', linewidth=3.0)
 
 plt.fill_between(fs,np.repeat(15.11*1.091-3.96, len(fs)), np.repeat(15.11*1.091+3.96, len(fs)),
                  color=sns.xkcd_rgb["grey"], alpha=0.3)
@@ -352,7 +352,7 @@ plt.fill_between(fs,np.repeat(15.11*1.091-3.96, len(fs)), np.repeat(15.11*1.091+
 plt.xticks(fs)
 #plt.yticks(np.arange(min(data_frame2_fs),max(data_frame2_fs),1))
 plt.yticks(np.arange(0, 25, 1))
-plt.ylabel('Alaska calving flux \n [$km³.yr^{-1}$]')
+plt.ylabel('Alaska frontal ablation \n [$km³.yr^{-1}$]')
 plt.xlabel('Sliding parameter $f_{s}$ [$\mathregular{s^{−1}} \mathregular{Pa^{−3}}$]')
 plt.legend()
 letkm = dict(color='black', ha='left', va='top', fontsize=20,
