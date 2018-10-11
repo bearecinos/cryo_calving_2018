@@ -16,7 +16,7 @@ width_cm = 14
 height_cm = 7
 
 
-MAIN_PATH = os.path.expanduser('~/Documents/cryo_calving_2018_version2/')
+MAIN_PATH = os.path.expanduser('~/cryo_calving_2018/')
 
 plot_path = os.path.join(MAIN_PATH, 'plots/')
 
@@ -47,68 +47,6 @@ df = pd.DataFrame(data=d)
 
 diff = df['McNabb et al. (2015)'] - df['OGGM rectangular']
 diff_norec = df['McNabb et al. (2015)'] - df['OGGM parabolic']
-
-
-fig = plt.figure(figsize=(width_cm, height_cm))
-sns.set()
-sns.set_color_codes("colorblind")
-#sns.set_style("white")
-# Plot settings
-rcParams['axes.labelsize'] = 20
-rcParams['xtick.labelsize'] = 20
-rcParams['ytick.labelsize'] = 20
-rcParams['legend.fontsize'] = 16
-
-N = len(df)
-ind = np.arange(N)
-labels = df.index.values
-
-p1 = plt.plot(ind, diff, '-')
-p2 = plt.plot(ind, diff_norec, '-')
-
-plt.ylabel('Calving flux differences (km³$yr^{-1}$)')
-plt.xticks(ind, labels, rotation='vertical')
-plt.legend((p1[0], p2[0]), ('Rectangular bed shape','Parabolic bed shape'))
-plt.margins(0.05)
-plt.show()
-#plt.savefig(os.path.join(plot_path, 'appendixb.png'), dpi=150,
-#                 bbox_inches='tight')
-
-
-#Create figure and axes instances
-#
-#
-fig = plt.figure(figsize=(width_cm, height_cm))
-sns.set()
-sns.set(style="white", context="talk")
-
-# Plot settings
-rcParams['axes.labelsize'] = 20
-rcParams['xtick.labelsize'] = 20
-rcParams['ytick.labelsize'] = 20
-rcParams['legend.fontsize'] = 16
-
-N = len(df)
-ind = np.arange(N)
-graph_width = 0.35
-
-std_oggm = df['OGGM rectangular'].values.std()
-std_fix =  df['McNabb et al. (2015)'].values.std()
-
-labels = df.index.values
-
-p1 = plt.bar(ind, df['OGGM rectangular'].values, graph_width)#, yerr=std_oggm)
-p2 = plt.bar(ind+graph_width, df['McNabb et al. (2015)'].values, graph_width)#, yerr=std_fix)
-
-plt.ylabel('Calving flux (km³$yr^{-1}$)')
-plt.xticks(ind + graph_width/2, labels, rotation='vertical')
-plt.legend((p1[0], p2[0]), ('OGGM', 'McNabb et al. (2015)'))
-
-plt.show()
-
-#plt.savefig(os.path.join(plot_path, 'appendixa.png'), dpi=150,
-#                 bbox_inches='tight')
-
 
 fig = plt.figure(figsize=(width_cm, height_cm*2))
 sns.set()

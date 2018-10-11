@@ -20,7 +20,7 @@ import matplotlib.pyplot as plt
 
 
 cfg.initialize()
-MAIN_PATH = os.path.expanduser('~/Documents/cryo_calving_2018_version2/')
+MAIN_PATH = os.path.expanduser('~/cryo_calving_2018/')
 
 WORKING_DIR = os.path.join(MAIN_PATH,
                            'output_data/1_Columbia_Glacier_runs/2_calving/')
@@ -349,5 +349,6 @@ if Plot_fig_3:
                   bbox=dict(facecolor='white', edgecolor='black'))
     #ax.text(-10, 3500, 'c', **letkm)
     plt.tight_layout()
-    plt.savefig(os.path.join(plot_path, 'columbia_profileplusgradient.png'),
-                             dpi=150, bbox_inches='tight')
+    plt.show()
+    #plt.savefig(os.path.join(plot_path, 'columbia_profileplusgradient.png'),
+    #                         dpi=150, bbox_inches='tight')

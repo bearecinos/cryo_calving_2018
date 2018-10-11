@@ -22,7 +22,7 @@ height_cm = 7
 
 
 # Reading the data
-MAIN_PATH = os.path.expanduser('~/Documents/cryo_calving_2018_version2/')
+MAIN_PATH = os.path.expanduser('~/cryo_calving_2018/')
 
 plot_path = os.path.join(MAIN_PATH, 'plots/')
 
@@ -277,7 +277,7 @@ plt.yticks(np.arange(0, 90, 20.0))
 plt.ylabel('Alaska frontal ablation \n [$km³.yr^{-1}$]')
 plt.xlabel('Calving constant k [$\mathregular{yr^{-1}}$] ')
 plt.legend(bbox_to_anchor=(0.02, 0.8), loc='center left', borderaxespad=0.)
-#plt.legend(bbox_to_anchor=(0.615, 1))
+
 plt.text(0.4, 47.0, 'Intercepts to observations', fontsize=18)
 plt.text(0.4,41,'$k_{1}$ = 0.61', fontsize=18)
 plt.text(0.4, 35, '$k_{2}$ = 0.70', fontsize=18)
@@ -285,27 +285,22 @@ letkm = dict(color='black', ha='left', va='top', fontsize=20,
                  bbox=dict(facecolor='white', edgecolor='black'))
 plt.text(0.14, 84.5, 'a', **letkm)
 plt.margins(0.05)
-#plt.show()
-#plt.savefig(os.path.join(plot_path, 'k_factors.png'), dpi=150,
-#                   bbox_inches='tight')
 
 
-
-#fig2 = plt.figure(2, figsize=(width_cm, height_cm))
 plt.subplot(gs[1])
 sns.set_color_codes("colorblind")
 sns.set_style("white")
 
-plt.plot(glen_a, data_frame0_A, linestyle="--", #color=sns.xkcd_rgb["forest green"],
+plt.plot(glen_a, data_frame0_A, linestyle="--",
              label=my_labels_glena["x0"], linewidth=2.5)
 
-plt.plot(glen_a, data_frame1_A, linestyle="--", #color=sns.xkcd_rgb["green"],
+plt.plot(glen_a, data_frame1_A, linestyle="--",
              label=my_labels_glena["x1"], linewidth=2.5)
 
-plt.plot(glen_a, data_frame2_A, #color=sns.xkcd_rgb["teal"],
+plt.plot(glen_a, data_frame2_A,
              label=my_labels_glena["x2"], linewidth=2.5)
 
-plt.plot(glen_a, data_frame3_A, #color=sns.xkcd_rgb["turquoise"],
+plt.plot(glen_a, data_frame3_A,
              label=my_labels_glena["x3"], linewidth=2.5)
 
 plt.plot(glen_a, np.repeat(15.11*1.091, len(glen_a)), '--', color='black',
@@ -315,9 +310,7 @@ plt.fill_between(glen_a,np.repeat(15.11*1.091-3.96, len(glen_a)), np.repeat(15.1
                  color=sns.xkcd_rgb["grey"], alpha=0.3)
 
 plt.xticks(glen_a)
-plt.yticks(np.arange(0, 35, 3.0))#max(data_frame2)
-
-#plt.gca().xaxis.set_major_formatter(ScalarFormatter())
+plt.yticks(np.arange(0, 35, 3.0))
 
 plt.ylabel('Alaska frontal ablation \n [$km³.yr^{-1}$]')
 plt.xlabel('Glen A [$\mathregular{s^{−1}} \mathregular{Pa^{−3}}$]')
@@ -326,12 +319,8 @@ letkm = dict(color='black', ha='left', va='top', fontsize=20,
                  bbox=dict(facecolor='white', edgecolor='black'))
 plt.text(glen_a[0]-1.15e-25, 27.25, 'b', **letkm)
 plt.margins(0.05)
-#plt.show()
 
 
-
-# Create figure and axes instances
-#fig3 = plt.figure(3, figsize=(width_cm, height_cm))
 ax = plt.subplot(gs[2])
 #sns.set_color_codes("dark")
 sns.set_color_codes("colorblind")
@@ -350,7 +339,6 @@ plt.fill_between(fs,np.repeat(15.11*1.091-3.96, len(fs)), np.repeat(15.11*1.091+
                  color=sns.xkcd_rgb["grey"], alpha=0.3)
 
 plt.xticks(fs)
-#plt.yticks(np.arange(min(data_frame2_fs),max(data_frame2_fs),1))
 plt.yticks(np.arange(0, 25, 1))
 plt.ylabel('Alaska frontal ablation \n [$km³.yr^{-1}$]')
 plt.xlabel('Sliding parameter $f_{s}$ [$\mathregular{s^{−1}} \mathregular{Pa^{−3}}$]')
@@ -360,6 +348,6 @@ letkm = dict(color='black', ha='left', va='top', fontsize=20,
 plt.text(-3e-21, 20.73, 'c', **letkm)
 plt.margins(0.05)
 plt.subplots_adjust(hspace=0.2)
-#plt.show()
+
 plt.savefig(os.path.join(plot_path, 'sensitivity.pdf'), dpi=150,
                    bbox_inches='tight')

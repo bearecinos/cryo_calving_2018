@@ -22,7 +22,7 @@ height_cm = 8
 
 
 # Reading the data
-MAIN_PATH = os.path.expanduser('~/Documents/cryo_calving_2018_version2/')
+MAIN_PATH = os.path.expanduser('~/cryo_calving_2018/')
 
 plot_path = os.path.join(MAIN_PATH, 'plots/')
 
