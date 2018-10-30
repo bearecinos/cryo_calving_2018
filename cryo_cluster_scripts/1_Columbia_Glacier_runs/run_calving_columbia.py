@@ -152,7 +152,7 @@ for gdir in gdirs:
     execute_entity_task(tasks.apparent_mb, gdirs)
 
 # Inversion tasks
-execute_entity_task(tasks.prepare_for_inversion, gdirs)
+execute_entity_task(tasks.prepare_for_inversion, gdirs, add_debug_var=True)
 execute_entity_task(tasks.volume_inversion, gdirs, glen_a=cfg.A, fs=cfg.FS)
 execute_entity_task(tasks.filter_inversion_output, gdirs)
 

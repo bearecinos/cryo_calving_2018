@@ -167,7 +167,7 @@ suf = 'glen_a'+str(3.339e-24)+'_fs_zero'+str(k)
 
 if RUN_INVERSION:
     # Inversion tasks
-    execute_entity_task(tasks.prepare_for_inversion, gdirs)
+    execute_entity_task(tasks.prepare_for_inversion, gdirs, add_debug_var=True)
     execute_entity_task(tasks.volume_inversion, gdirs, glen_a=3.339e-24,
                         fs=0.0)
     execute_entity_task(tasks.filter_inversion_output, gdirs)

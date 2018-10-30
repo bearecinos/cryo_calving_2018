@@ -182,7 +182,7 @@ suf = '_cfgA_cfgFS'+str(k)
 
 if RUN_INVERSION:
     # Inversion tasks
-    execute_entity_task(tasks.prepare_for_inversion, gdirs)
+    execute_entity_task(tasks.prepare_for_inversion, gdirs, add_debug_var=True)
     execute_entity_task(tasks.volume_inversion, gdirs, glen_a=cfg.A,
                         fs=cfg.FS)
     execute_entity_task(tasks.filter_inversion_output, gdirs)
@@ -336,7 +336,7 @@ if With_calving:
                         glen_a=cfg.A, fs=cfg.FS)
 
     # Write out glacier statistics
-    utils.glacier_characteristics(gdirs, filesuffix='_with_calving_'+suf,
+    utils.glacier_characteristics(gdirs, filesuffix='_with_calving_no_recbed_'+suf,
                                   inversion_only=True)
 
     m, s = divmod(time.time() - start, 60)

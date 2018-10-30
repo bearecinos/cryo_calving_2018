@@ -116,7 +116,7 @@ if RUN_CLIMATE_PREPRO:
 
 if RUN_INVERSION:
     # Inversion tasks
-    execute_entity_task(tasks.prepare_for_inversion, gdirs)
+    execute_entity_task(tasks.prepare_for_inversion, gdirs, add_debug_var=True)
     execute_entity_task(tasks.volume_inversion, gdirs, glen_a=cfg.A, fs=cfg.FS)
 
 # Compile output
