@@ -1,7 +1,7 @@
 # Sensitivity experiments 
 
-These scripts will calculate the calving flux of Alaska marine-terminating 
-glaciers computed by varying factors of OGGM default parameters.
+These scripts will calculate the frontal ablation flux of Alaska marine-terminating 
+glaciers computed by varying OGGM default parameters.
 
 The content of each experiment is the following:
 

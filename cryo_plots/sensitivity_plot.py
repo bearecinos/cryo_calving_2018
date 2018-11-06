@@ -286,27 +286,27 @@ letkm = dict(color='black', ha='left', va='top', fontsize=20,
 plt.text(0.14, 84.5, 'a', **letkm)
 plt.margins(0.05)
 
-
 plt.subplot(gs[1])
 sns.set_color_codes("colorblind")
 sns.set_style("white")
 
-plt.plot(glen_a, data_frame0_A, linestyle="--",
+plt.plot(glen_a, data_frame0_A, linestyle="--", #color=sns.xkcd_rgb["forest green"],
              label=my_labels_glena["x0"], linewidth=2.5)
 
-plt.plot(glen_a, data_frame1_A, linestyle="--",
+plt.plot(glen_a, data_frame1_A, linestyle="--", #color=sns.xkcd_rgb["green"],
              label=my_labels_glena["x1"], linewidth=2.5)
 
-plt.plot(glen_a, data_frame2_A,
+plt.plot(glen_a, data_frame2_A, #color=sns.xkcd_rgb["teal"],
              label=my_labels_glena["x2"], linewidth=2.5)
 
-plt.plot(glen_a, data_frame3_A,
+plt.plot(glen_a, data_frame3_A, #color=sns.xkcd_rgb["turquoise"],
              label=my_labels_glena["x3"], linewidth=2.5)
 
 plt.plot(glen_a, np.repeat(15.11*1.091, len(glen_a)), '--', color='black',
              label='Frontal ablation (McNabb et al., 2015)', linewidth=3.0)
 
-plt.fill_between(glen_a,np.repeat(15.11*1.091-3.96, len(glen_a)), np.repeat(15.11*1.091+3.96, len(glen_a)),
+plt.fill_between(glen_a,np.repeat(15.11*1.091-3.96, len(glen_a)),
+                 np.repeat(15.11*1.091+3.96, len(glen_a)),
                  color=sns.xkcd_rgb["grey"], alpha=0.3)
 
 plt.xticks(glen_a)
@@ -335,10 +335,12 @@ plt.plot(fs, data_frame2_fs,
 plt.plot(fs, np.repeat(15.11 * 1.091, len(fs)), '--', color='black',
          label='Frontal ablation (McNabb et al., 2015)', linewidth=3.0)
 
-plt.fill_between(fs,np.repeat(15.11*1.091-3.96, len(fs)), np.repeat(15.11*1.091+3.96, len(fs)),
+plt.fill_between(fs,np.repeat(15.11*1.091-3.96, len(fs)),
+                 np.repeat(15.11*1.091+3.96, len(fs)),
                  color=sns.xkcd_rgb["grey"], alpha=0.3)
 
 plt.xticks(fs)
+
 plt.yticks(np.arange(0, 25, 1))
 plt.ylabel('Alaska frontal ablation \n [$km³.yr^{-1}$]')
 plt.xlabel('Sliding parameter $f_{s}$ [$\mathregular{s^{−1}} \mathregular{Pa^{−3}}$]')

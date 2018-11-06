@@ -100,11 +100,6 @@ gdirs = workflow.init_glacier_regions(rgidf)
 
 k = 2.4
 
-# Get terminus widths
-data_link = os.path.join(MAIN_PATH,
-                         'input_data/observations_widths_depths.csv')
-dfmac = pd.read_csv(data_link, index_col=0)
-
 # Defining a calving function
 def calving_from_depth(gdir, k):
     """ Finds a calving flux based on the approaches proposed by
@@ -124,16 +119,11 @@ def calving_from_depth(gdir, k):
 
     thick = cl['thick'][-1]
 
-    if gdir.rgi_id in dfmac.index:
-        w_depth = dfmac.loc[gdir.rgi_id]['depth']
-        if np.isnan(w_depth):
-            w_depth = thick - t_altitude
-    else:
-        w_depth = thick - t_altitude
+    w_depth = thick - t_altitude
 
-    print('t_altitude_fromfun', t_altitude)
-    print('depth_fromfun', w_depth)
-    print('thick_fromfun', thick)
+    # print('t_altitude_fromfun', t_altitude)
+    # print('depth_fromfun', w_depth)
+    # print('thick_fromfun', thick)
     # print('width', width)
     out = k * thick * w_depth * width / 1e9
     if out < 0:
@@ -162,12 +152,6 @@ task_list = [
 if RUN_GIS_PREPRO:
     for task in task_list:
         execute_entity_task(task, gdirs)
-
-    # For some glaciers we use a width we know
-    for gdir in gdirs:
-        if gdir.rgi_id in dfmac.index:
-            width = dfmac.loc[gdir.rgi_id]['width']
-            tasks.terminus_width_correction(gdir, new_width=width)
 
 if RUN_CLIMATE_PREPRO:
     for gdir in gdirs:
@@ -233,13 +217,11 @@ if With_calving:
             t_altitude = cl['hgt'][-1]
 
             thick = t_altitude + 1
-            if gdir.rgi_id in dfmac.index:
-                w_depth = dfmac.loc[gdir.rgi_id]['depth']
-                if np.isnan(w_depth):
-                    w_depth = thick - t_altitude
-            else:
-                w_depth = thick - t_altitude
+            w_depth = thick - t_altitude
 
+            # print('t_altitude', t_altitude)
+            # print('depth', w_depth)
+            # print('thick', thick)
             fl = gdir.read_pickle('inversion_flowlines')[-1]
             width = fl.widths[-1] * gdir.grid.dx
 
@@ -336,8 +318,7 @@ if With_calving:
                         glen_a=cfg.A, fs=cfg.FS)
 
     # Write out glacier statistics
-    utils.glacier_characteristics(gdirs, filesuffix='_with_calving_no_recbed_'+suf,
-                                  inversion_only=True)
+    utils.glacier_characteristics(gdirs, filesuffix='_with_calving_'+suf)
 
     m, s = divmod(time.time() - start, 60)
     h, m = divmod(m, 60)

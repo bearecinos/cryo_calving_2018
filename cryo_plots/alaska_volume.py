@@ -1,5 +1,5 @@
 # This script will calculate the total alaska volume per experiment
-# TODO MAKE THIS SCRIPT BETTER IS THE WORSE OF THE WORSE!
+
 import oggm.cfg as cfg
 import numpy as np
 import pandas as pd
@@ -10,28 +10,43 @@ os.getcwd()
 import matplotlib.pyplot as plt
 from matplotlib import rcParams
 
-# Plot settings
-# Set figure width and height in cm
-width_cm = 12
-height_cm = 8
+# Useful functions to calculate volume and
+# volume conversions
 
 def calculate_sea_level_equivalent(value):
-    rho_ice = 0.900  #Gt km-3
+    """
+    Calculates sea level equivalent of a volume
+    of ice in km^3
+    taken from: http://www.antarcticglaciers.org
+
+    :param value: glacier volume
+    :return: glacier volume in s.l.e
+    """
+    # Convert density of ice to Gt/km^3
+    rho_ice = cfg.RHO * 1e-3 # Gt/km^3
+
     area_ocean = 3.618e8 # km^2
     height_ocean = 1e-6 # km (1 mm)
+
     # Volume of water required to raise global sea levels by 1 mm
     vol_water = area_ocean*height_ocean # km^3 of water
+
     mass_ice = value * rho_ice # Gt
-    return np.around(mass_ice*(1 / vol_water),1)
+    return mass_ice*(1 / vol_water)
 
-def calculate_sea_level_percentage(voltotal, vbsl):
-    return np.around((vbsl*100)/voltotal,2)
-
-def calculate_total_percentage(vol_no_calving,vol_calving):
-    percentage = (vol_calving/vol_no_calving)*100
-    return np.around(percentage-100,2)
+def calculate_volume_percentage(volume_one, volume_two):
+    return np.around((volume_two*100)/volume_one,2)
 
 def read_experiment_file(filename):
+    """
+    Read glacier_characteristics.csv file
+    for each model configuration
+
+    :param filename:
+    :return: total volume of that experiment
+             the name of the file
+             base directory
+    """
     glacier_run = pd.read_csv(filename, index_col='rgi_id')
     tail = os.path.basename(filename)
     basedir = os.path.dirname(filename)
@@ -39,6 +54,14 @@ def read_experiment_file(filename):
     return total_volume, tail, basedir
 
 def read_experiment_file_vbsl(filename):
+    """
+    Reads volume_below_sea_level.csv
+    for each model configuration
+    :param filename:
+    :return: total_volume: below sea level before calving
+             total_volume_c: below sea level after calving
+             tail: the name of the file
+    """
     glacier_run = pd.read_csv(filename)
     tail = os.path.basename(filename)
     total_volume = glacier_run['volume bsl'].sum()
@@ -46,7 +69,7 @@ def read_experiment_file_vbsl(filename):
     return total_volume, total_volume_c, tail
 
 
-# Reading the data
+# Reading the directories
 MAIN_PATH = os.path.expanduser('~/cryo_calving_2018/')
 
 plot_path = os.path.join(MAIN_PATH, 'plots/')
@@ -57,7 +80,7 @@ output_dir_path = os.path.join(MAIN_PATH,
 exclude = set(['4_3_With_calving_exp_onlyMT_vbsl','4_5_Velocities'])
 
 
-# Just paths for Land and lake glacier_char.csv experiment file
+# Creating the paths for Land and Lake glacier_char.csv files
 full_exp_name_land_lake = []
 
 for path, subdirs, files in os.walk(output_dir_path, topdown=True):
@@ -70,7 +93,7 @@ for path, subdirs, files in os.walk(output_dir_path, topdown=True):
 
 #print(full_exp_name_land_lake)
 
-# Just paths for marine glacier_char.csv experiment file
+# Creating the paths for Marine glacier_char.csv files
 full_exp_name = []
 
 for path, subdirs, files in os.walk(output_dir_path, topdown=True):
@@ -81,162 +104,146 @@ for path, subdirs, files in os.walk(output_dir_path, topdown=True):
     for name in files:
         full_exp_name.append(os.path.join(path,name))
 
+
+# Extract volumes for non-calving experiments
+# Reading no-calving experiments contained in 4_1_No_calving_exp folder
+
 #print(full_exp_name[0:8])
-
-# Volumes for No calving experiments
-# Reading no calving experiments
-
-#print(full_exp_name[0:6])
-volume_per_exp_no_calving = []
+volume_no_calving = []
 exp_name = []
 exp_number = [1, 2, 3, 4, 5, 6, 7, 8]
 
 for f in full_exp_name[0:8]:
-    total_vol, tails, basedir = read_experiment_file(f)
-    volume_per_exp_no_calving += [np.around(total_vol,2)]
+    volume, tails, basedir = read_experiment_file(f)
+    volume_no_calving += [np.around(volume,2)]
     exp_name += [basedir]
+#print('Experiment name', exp_number)
+#print('Volume before calving', volume_no_calving)
 
-print('Experiment name', exp_number)
-print('Volume before calving', volume_per_exp_no_calving)
+volume_no_calving_sle = []
+for value in volume_no_calving:
+    volume_no_calving_sle.append(calculate_sea_level_equivalent(value))
+#print('Volume before calving SLE', volume_no_calving_sle)
 
-volume_per_exp_no_calving_sle = []
-for value in volume_per_exp_no_calving:
-    volume_per_exp_no_calving_sle.append(calculate_sea_level_equivalent(value))
-print('Volume before calving SLE', volume_per_exp_no_calving_sle)
 
-# Volumes for calving experiments
-# Reading calving experiments
-
+# Extract volumes for calving experiments
+# Reading calving experiments contained in 4_2_With_calving_exp_onlyMT
 #print(full_exp_name[8:len(full_exp_name)])
-volume_per_exp_calving = []
-exp_name = []
-exp_number_c = [10, 3, 4, 5, 6, 7, 8, 9]
+volume_calving = []
+exp_name_c = []
+exp_number_c = [1, 2, 3, 4, 5, 6, 7, 8]
 
 for f in full_exp_name[8:len(full_exp_name)]:
-    total_vol, tails, basedir= read_experiment_file(f)
-    volume_per_exp_calving += [np.around(total_vol,2)]
-    exp_name += [basedir]
+    volume, tails, basedir= read_experiment_file(f)
+    volume_calving += [np.around(volume,2)]
+    exp_name_c += [basedir]
+#print('Experiment name', exp_number_c)
+#print('Volume after calving', volume_calving)
 
-print('Experiment name', exp_number_c)
-print('Volume after calving', volume_per_exp_calving)
+volume_calving_sle = []
+for value in volume_calving:
+    volume_calving_sle.append(calculate_sea_level_equivalent(value))
+#print('Volume after calving SLE', volume_calving_sle)
 
-volume_per_exp_calving_sle = []
 
-for value in volume_per_exp_calving:
-    volume_per_exp_calving_sle.append(calculate_sea_level_equivalent(value))
-print('Volume after calving SLE', volume_per_exp_calving_sle)
-
-#Volumes for land and lake terminating before calving
+# Extract volumes for land and lake experiments before calving
+# for the different configurations
 volume_land_lake = []
 exp_name_land_lake = []
 
 for f in full_exp_name_land_lake:
-    total_vol, tails, basedir=read_experiment_file(f)
-    volume_land_lake += [np.around(total_vol,2)]
+    volume, tails, basedir = read_experiment_file(f)
+    volume_land_lake += [np.around(volume,2)]
     exp_name_land_lake += [basedir]
+#print('Experiment name', exp_name_land_lake)
+#print('Land and lake volume', volume_land_lake)
 
-print('Experiment name', exp_name_land_lake)
-print('Land and lake volume', volume_land_lake)
-
-
+# To check if we are right with the volume calculations
+#print('All Alaska volume before calving',
+#      [a + b for a, b in zip(volume_land_lake, volume_no_calving)])
 volume_land_lake_sle = []
 for value in volume_land_lake:
     volume_land_lake_sle.append(calculate_sea_level_equivalent(value))
-print('Land and lake volume SLE', volume_land_lake_sle)
+#print('Land and lake volume SLE', volume_land_lake_sle)
 
 
+# Extract volumes from volume_below_sea_level.csv
+# for the different configurations
+# Reading calving experiments contained in 4_3_With_calving_exp_onlyMT_vbsl
+exp_dir_path = os.path.join(output_dir_path,
+                            '4_3_With_calving_exp_onlyMT_vbsl')
+dir_name = os.listdir(exp_dir_path)
 
-gather_volume_bsl = True
+full_dir_name = []
+for d in dir_name:
+    full_dir_name.append(os.path.join(exp_dir_path,
+                             d +'/volume_below_sea_level.csv'))
 
-if gather_volume_bsl:
-    exp_dir_path = os.path.join(output_dir_path,'4_3_With_calving_exp_onlyMT_vbsl')
-    dir_name = os.listdir(exp_dir_path)
-    full_dir_name = []
+full_dir_name = sorted(full_dir_name)
+#print(full_dir_name)
 
-    for d in dir_name:
-        full_dir_name.append(os.path.join(exp_dir_path,
-                                          d +'/volume_below_sea_level.csv'))
+# Reading no calving volumes below sea level
+vbsl = []
+vbsl_c = []
+exp_name_bsl = []
 
-    full_dir_name = sorted(full_dir_name)
-    #print(full_dir_name)
+for f in full_dir_name:
+    volume, volume_c, tails = read_experiment_file_vbsl(f)
+    vbsl += [np.around(volume,2)]
+    vbsl_c += [np.around(volume_c,2)]
+    exp_name_bsl += [tails]
 
-    # Reading no calving experiments
-    vbsl_per_exp = []
-    vbsl_per_exp_c = []
-    exp_name = []
+print('Experiment', exp_number)
+print('Volume bsl no calving', vbsl)
+print('Volume bsl calving', vbsl_c)
 
-    for f in full_dir_name:
-        total_vol, total_vol_c,  tails = read_experiment_file_vbsl(f)
-        vbsl_per_exp += [np.around(total_vol,2)]
-        vbsl_per_exp_c += [np.around(total_vol_c,2)]
-        exp_name += [tails]
+# sea level equivalent
+vbsl_sle = []
+vbsl_c_sle = []
 
+for i, j in zip(vbsl, vbsl_c):
+    vbsl_sle.append(calculate_sea_level_equivalent(i))
+    vbsl_c_sle.append(calculate_sea_level_equivalent(j))
 
-    print('Experiment', exp_number)
-    print('no calving vbsl', vbsl_per_exp)
-    print('with calving vbsl', vbsl_per_exp_c)
+print('Volume bsl no calving in s.l.e', vbsl_sle)
+print('Volume bsl calving in s.l.e', vbsl_c_sle)
 
+d = {'Experiment No': exp_number,
+     'Volume no calving in s.l.e': volume_no_calving_sle,
+     'Volume no calving bsl in s.l.e': vbsl_sle,
+     'Volume with calving in s.l.e': volume_calving_sle,
+     'Volume with calving bsl in s.l.e': vbsl_c_sle,
+     'Volume differences in s.l.e':
+         [np.abs(a - b) for a, b in zip(volume_no_calving_sle,volume_calving_sle)],
+     'Volume no calving in km3': volume_no_calving,
+     'Volume no calving bsl km3': vbsl,
+     'Volume with calving in km3': volume_calving,
+     'Volume with calving bsl km3': vbsl_c,
+     'Volume differences in km3':
+         [np.abs(a - b) for a, b in zip(volume_no_calving,volume_calving)],
+     }
 
-    # sea level equivalent
-    vbsl_per_exp_sle = []
-    vbsl_per_exp_c_sle = []
-    for i, j in zip(vbsl_per_exp, vbsl_per_exp_c):
-        vbsl_per_exp_sle.append(calculate_sea_level_equivalent(i))
-        vbsl_per_exp_c_sle.append(calculate_sea_level_equivalent(j))
+ds = pd.DataFrame(data=d)
+ds = ds.sort_values(by=['Experiment No'])
+#ds.to_csv(os.path.join(plot_path,
+#                       'MT_glaciers_volume_per_exp.csv'))
+print('----------- For de paper ------------------')
+print('Mean and std volume with calving',
+      np.round(np.mean(volume_calving_sle),2), np.round(np.std(volume_calving_sle),2))
+print('Mean and std volume no calving',
+      np.round(np.mean(volume_no_calving_sle),2), np.round(np.std(volume_no_calving_sle),2))
+print('Mean and std volume below sea level with calving',
+      np.round(np.mean(vbsl_c_sle),2), np.round(np.std(vbsl_c_sle),2))
 
-    print('sea level equivalent vbsl no calving', vbsl_per_exp_sle)
-    print('sea level equivalent vbsl calving', vbsl_per_exp_c_sle)
+print('TABLE',ds)
 
-    # Calculate percentage of volume below sea level
-    vbsl_percentage = []
-    vbsl_percentage_c = []
+print('is vbsl bigger than differnces', vbsl_c > ds['Volume differences in km3'].values)
 
-    for i, j in zip(volume_per_exp_no_calving, vbsl_per_exp):
-        vbsl_percentage.append(calculate_sea_level_percentage(i,j))
+# Plot settings
+# Set figure width and height in cm
+width_cm = 12
+height_cm = 8
 
-    for i, j in zip(volume_per_exp_calving, vbsl_per_exp_c):
-        vbsl_percentage_c.append(calculate_sea_level_percentage(i,j))
-
-    #print('vol percentage bsl no calving',vbsl_percentage)
-    #print('vol percantage bsl calving', vbsl_percentage_c)
-
-    percentage_vol_changed = []
-    for i, j in zip(volume_per_exp_no_calving, volume_per_exp_calving):
-        percentage_vol_changed.append(calculate_total_percentage(i,j))
-
-    print(percentage_vol_changed)
-
-    d = {'Experiment No': exp_number,
-         'Volume no calving': volume_per_exp_no_calving,
-         'no calving vbsl': vbsl_per_exp,
-         'no calving % below sea level': vbsl_percentage,
-         'Volume with calving': volume_per_exp_calving,
-         'with calving % below sea level': vbsl_percentage_c,
-         'with calving vbsl': vbsl_per_exp_c,
-         'Volume %':percentage_vol_changed}
-
-    ds = pd.DataFrame(data=d)
-    ds = ds.sort_values(by=['Experiment No'])
-
-    print('-----------------------------------')
-    print('TABLE',ds)
-
-    # Volume differences
-    vol_diff = []
-    vol_diff_bsl = []
-
-    for i, j in zip(volume_per_exp_calving, volume_per_exp_no_calving):
-        vol_diff.append(i-j)
-
-    for i, j in zip(vbsl_per_exp_c, vbsl_per_exp):
-        vol_diff_bsl.append(i-j)
-
-    print('total vol calving - no calving', np.round(vol_diff,2))
-    print('total vol bsl calving - no calving', np.round(vol_diff_bsl,2))
-
-import matplotlib.ticker as mtick
-
-# exit()
 fig = plt.figure(figsize=(width_cm, height_cm))
 sns.set(style="white", context="talk")
 
@@ -254,20 +261,22 @@ ind = np.arange(N)
 graph_width = 0.35
 labels = ds['Experiment No'].values
 
-bars1 = ds['no calving vbsl'].values
-bars2 = ds['Volume no calving'].values
+bars1 = ds['Volume no calving bsl km3'].values
+bars2 = ds['Volume no calving in km3'].values
 #print(bars2)
 
-bars3 = ds['with calving vbsl'].values
-bars4 = ds['Volume with calving'].values
+bars3 = ds['Volume with calving bsl km3'].values
+bars4 = ds['Volume with calving in km3'].values
 
 sns.set_color_codes()
 sns.set_color_codes("colorblind")
 
-p1 = ax1.barh(ind, bars1*-1, color="indianred", edgecolor="white", height=graph_width)
+p1 = ax1.barh(ind, bars1*-1,
+              color="indianred", edgecolor="white", height=graph_width)
 p2 = ax1.barh(ind, bars2, height=graph_width, edgecolor="white")
 
-p3 = ax1.barh(ind - graph_width, bars3*-1, color="indianred",edgecolor="white", height=graph_width)
+p3 = ax1.barh(ind - graph_width, bars3*-1,
+              color="indianred",edgecolor="white", height=graph_width)
 p4 = ax1.barh(ind - graph_width, bars4, edgecolor="white",
               height=graph_width)
 
@@ -282,7 +291,7 @@ array = ax1.get_xticks()
 
 sle = []
 for value in array:
-    sle.append(abs(calculate_sea_level_equivalent(value)))
+    sle.append(np.round(abs(calculate_sea_level_equivalent(value)),2))
 #print(sle)
 
 ax2.set_xticklabels(sle,fontsize=20)
@@ -294,11 +303,13 @@ ax1.set_yticklabels(labels, fontsize=20)
 ax1.set_ylabel('Model configurations', fontsize=18)
 ax1.set_xlabel('Volume [km³]',fontsize=18)
 plt.legend((p2[0], p4[0], p1[0]),
-           ('Volume without frontal ablation', 'Volume with frontal ablation', 'Volume below sea level'),
+           ('Volume without frontal ablation',
+            'Volume with frontal ablation',
+            'Volume below sea level'),
             frameon=True,
             bbox_to_anchor=(1.1, -0.1), ncol=3, fontsize=15)
 plt.margins(0.05)
 
 #plt.show()
-plt.savefig(os.path.join(plot_path, 'marine_volume.pdf'), dpi=150,
-                  bbox_inches='tight')
+plt.savefig(os.path.join(plot_path, 'marine_volume.pdf'),
+            dpi=150, bbox_inches='tight')

@@ -2,6 +2,7 @@ import pandas as pd
 import os
 import geopandas as gpd
 import numpy as np
+import seaborn as sns
 from oggm import cfg, utils
 from oggm import workflow
 
@@ -59,20 +60,24 @@ def init_velocity(workdir):
 def calculate_velocity(gdir):
     map_dx = gdir.grid.dx
     fls = gdir.read_pickle('inversion_flowlines')
+
     cl = gdir.read_pickle('inversion_input')[-1]
     inv = gdir.read_pickle('inversion_output')[-1]
 
     # vol in m3 and dx in m
-    section = (inv['volume'] / inv['dx'])*1e-6
+    section = (inv['volume'] / inv['dx']) / 1e6
 
     x = np.arange(fls[-1].nx) * fls[-1].dx * map_dx * 1e-3
 
-    # this flux is in km3
-    flux = cl['flux_a0']
+    # this flux is in m3 per second needs to be km3/sec
+    flux = inv['flux'] / 1e9
+    #print(flux)
 
     angle = cl['slope_angle']
 
     velocity = flux / section
+
+    velocity *= cfg.SEC_IN_YEAR
 
     return velocity, normalize(x), angle
 
@@ -80,29 +85,27 @@ gdirs_one = init_velocity(no_calving)
 
 gdirs_two = init_velocity(with_calving)
 
+fig1 = plt.figure(1, figsize=(width_cm, height_cm))
+sns.set_color_codes("colorblind")
+
 for gdir, gdir_c in zip(gdirs_one,gdirs_two):
     vel, x, angle = calculate_velocity(gdir)
     vel_c, x_c, angle_c= calculate_velocity(gdir_c)
-    diff_angle_c = np.diff(np.arctan(angle_c))
+
+    #print(gdir.rgi_id)
+    #print(vel_c)
+
+    diff_angle_c = np.arctan(angle_c)
     diff_angle = np.diff(np.arctan(angle))
 
-    plt.figure(1)
     if vel_c[-1] > 0.0:
+        #print(vel_c)
         plt.plot(x_c, vel_c-vel, '-', label=gdir.rgi_id)
         plt.legend(loc='center left', bbox_to_anchor=(1.0, 0.5))
         plt.xlabel('Normalised distance along the main flowline', size=16)
         plt.ylabel('Velocity difference [$km.yr^{-1}$]', size=16)
 
-    # plt.figure(2)
-    # if np.abs(diff_angle[-1]) < 0.025:
-    #     plt.plot(x_c[-11:len(angle_c)-1],diff_angle_c[-10:], '-o')
-    #     plt.xlabel('Normalised distance along the main flowline', size=14)
-    #     plt.ylabel('Slope angle differences', size=14)
-
-
 plt.margins(0.05)
 #plt.show()
-
-
 plt.savefig(os.path.join(plot_path,'velocity_differences.pdf'),
                               dpi=150, bbox_inches='tight')

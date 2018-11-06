@@ -1,8 +1,8 @@
 # OGGM cryo calving paper 2018
 
 This repository **cryo_calving_2018** contains the scripts used to implement a
-calving parameterisation into [OGGM](www.oggm.org) and produce the results of
-the paper that will be submitted to: https://www.the-cryosphere.net/    
+frontal ablation parameterisation into [OGGM](www.oggm.org) and produce the results of
+the paper submitted to: https://www.the-cryosphere.net/    
 
 This repository uses a OGGM version V1.0.1 pinned here: https://github.com/OGGM/oggm/releases/tag/v1.0.1
 
@@ -20,7 +20,7 @@ The content of the repository is the following:
 4. Alaska volume and volume below sea level calculated with 
 different model configurations, and velocity experiment.
 
-5. Appendix run: Marine-terminating glaciers calving fluxes calculated 
+5. Marine-terminating glaciers frontal ablation fluxes calculated 
 by correcting the depth and width of the terminus 
 
 * **IMPORTANT TO RUN THIS FOLDERS:**
@@ -51,7 +51,7 @@ in cryo_cluster_scripts and copied to your PC home directory the output_data fol
 The right place to copy this folder is in  `~/cryo_calving_2018/output_data/`
 
 **III. Input data** 
-* Contains all data necessary for the cluster running and plotting scripts.
+* Contains all data necessary to run Alaska glaciers in the cluster and plotting scripts.
 
 **IV. Output data**
 * This folder will be generated once you have ran the first scripts in cryo_cluster_scripts.

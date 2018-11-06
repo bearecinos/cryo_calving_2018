@@ -32,14 +32,14 @@ export OGGM_DOWNLOAD_CACHE_RO=1
 export OGGM_EXTRACT_DIR="/work/$SLURM_JOB_USER/$SLURM_JOB_ID/oggm_tmp"
 
 # Run the actual job. The srun invocation starts it as individual step for slurm.
-srun -n 1 -c "${SLURM_JOB_CPUS_PER_NODE}" python3 ./run_alaska_MT.py
+srun -n 1 -c "${SLURM_JOB_CPUS_PER_NODE}" python3 ./run_alaska_MT_no_correction.py
 
 echo "Start copying..."
 
 # Once a slurm job is done, slurm will clean up the /work directory on that node from any leftovers from that user.
 # So copy any result data you need from there back to your home dir!
 # $SLURM_SUBMIT_DIR points to the directory from where the job was initially commited.
-OUTDIR="$HOME/cryo_calving_2018/output_data/5_Appendix_runs/"
+OUTDIR="$HOME/cryo_calving_2018/output_data/5_runs_width_depth_correction/"
 mkdir -p "$OUTDIR"
 
 # Copy any neccesary result data.
